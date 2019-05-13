@@ -34,10 +34,10 @@ actionButtonQW <- function(
 
   margin_bottom = paste0(adjust_height, "px")
 
-  style <- paste("margin: 0px", margin_right, margin_bottom, margin_left)
+  margin <- paste("margin: 0px", margin_right, margin_bottom, margin_left)
 
   ui <- div(
-    style = style,
+    style = margin,
     actionBttn(
       inputId = inputId,
       label = label,
