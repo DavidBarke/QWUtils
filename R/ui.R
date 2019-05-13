@@ -14,31 +14,31 @@
 #' @param block Logical, full width button.
 #' @param no_outline Logical, don't show outline when navigating with keyboard/
 #' interact using mouse or touch.
-#' @param dropdown Logical, button displayed in dropdown.
 #' @param tooltip Text to appear as a tooltip on the button.
+#' @param dropdown Logical, button displayed in dropdown.
+#' @param adjust_height Numeric, margin-bottom in px.
 #'
 #' @export
 actionButtonQW <- function(
   inputId, label, icon = NULL, style = "material-flat", color = "default",
-  size = "xs", block = FALSE, no_outline = TRUE, dropdown = FALSE,
-  tooltip = NULL
+  size = "xs", block = FALSE, no_outline = TRUE, tooltip = NULL,
+  dropdown = FALSE, adjust_height = 0
 ) {
   if (dropdown) {
-    ui <- div(
-      style = "margin: 0px 2px",
-      actionBttn(
-        inputId = inputId,
-        label = label,
-        icon = icon,
-        style = style,
-        color = color,
-        size = size,
-        block = block,
-        no_outline = no_outline
-      )
-    )
+    margin_left = "2px"
+    margin_right = "2px"
   } else {
-    ui <- actionBttn(
+    margin_left = "0px"
+    margin_right = "0px"
+  }
+
+  margin_right = paste0(adjust_height, "px")
+
+  style <- paste("margin: 0px", margin_right, margin_bottom, margin_left)
+
+  ui <- div(
+    style = style,
+    actionBttn(
       inputId = inputId,
       label = label,
       icon = icon,
@@ -48,7 +48,7 @@ actionButtonQW <- function(
       block = block,
       no_outline = no_outline
     )
-  }
+  )
 
   if (!is.null(tooltip)) {
     ui <- tagList(
