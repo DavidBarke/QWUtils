@@ -16,29 +16,29 @@
 #' interact using mouse or touch.
 #' @param tooltip Text to appear as a tooltip on the button.
 #' @param dropdown Logical, button displayed in dropdown.
-#' @param adjust_height Numeric, margin-bottom in px.
 #'
 #' @export
 actionButtonQW <- function(
   inputId, label, icon = NULL, style = "material-flat", color = "default",
   size = "xs", block = FALSE, no_outline = TRUE, tooltip = NULL,
-  dropdown = FALSE, adjust_height = 0
+  dropdown = FALSE
 ) {
   if (dropdown) {
-    margin_left = "2px"
-    margin_right = "2px"
+    ui <- div(
+      style = "margin: 0px 2px",
+      actionBttn(
+        inputId = inputId,
+        label = label,
+        icon = icon,
+        style = style,
+        color = color,
+        size = size,
+        block = block,
+        no_outline = no_outline
+      )
+    )
   } else {
-    margin_left = "0px"
-    margin_right = "0px"
-  }
-
-  margin_bottom = paste0(adjust_height, "px")
-
-  margin <- paste("margin: 0px", margin_right, margin_bottom, margin_left)
-
-  ui <- div(
-    style = margin,
-    actionBttn(
+    ui <- actionBttn(
       inputId = inputId,
       label = label,
       icon = icon,
@@ -48,7 +48,7 @@ actionButtonQW <- function(
       block = block,
       no_outline = no_outline
     )
-  )
+  }
 
   if (!is.null(tooltip)) {
     ui <- tagList(
