@@ -32,7 +32,7 @@ actionButtonQW <- function(
     margin_right = "0px"
   }
 
-  margin_right = paste0(adjust_height, "px")
+  margin_bottom = paste0(adjust_height, "px")
 
   style <- paste("margin: 0px", margin_right, margin_bottom, margin_left)
 
