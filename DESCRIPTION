@@ -1,0 +1,11 @@
+Package: QWUtils
+Type: Package
+Title: Useful Methods For Programming with Shiny
+Version: 0.1.0
+Author: David Barkemeyer
+Maintainer: David Barkemeyer <david.barkemeyer@gmx.de>
+Description: Not much yet.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
