@@ -26,7 +26,7 @@ actionButtonQW <- function(
   if (dropdown) {
     ui <- div(
       style = "margin: 0px 2px",
-      actionBttn(
+      shinyWidgets::actionBttn(
         inputId = inputId,
         label = label,
         icon = icon,
@@ -38,7 +38,7 @@ actionButtonQW <- function(
       )
     )
   } else {
-    ui <- actionBttn(
+    ui <- shinyWidgets::actionBttn(
       inputId = inputId,
       label = label,
       icon = icon,
@@ -53,7 +53,7 @@ actionButtonQW <- function(
   if (!is.null(tooltip)) {
     ui <- tagList(
       ui,
-      bsTooltip(
+      shinyBS::bsTooltip(
         id = inputId,
         title = tooltip,
         placement = "top"

@@ -2,6 +2,7 @@
 
 export("%_%")
 export(.label)
+export(ObjectStorage)
 export(actionButtonQW)
 export(fallback)
 export(firstup)

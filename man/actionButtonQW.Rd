@@ -6,7 +6,7 @@
 \usage{
 actionButtonQW(inputId, label, icon = NULL, style = "material-flat",
   color = "default", size = "xs", block = FALSE, no_outline = TRUE,
-  dropdown = FALSE, tooltip = NULL)
+  tooltip = NULL, dropdown = FALSE)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -31,9 +31,9 @@ could also use any other HTML, like an image.}
 \item{no_outline}{Logical, don't show outline when navigating with keyboard/
 interact using mouse or touch.}
 
-\item{dropdown}{Logical, button displayed in dropdown.}
-
 \item{tooltip}{Text to appear as a tooltip on the button.}
+
+\item{dropdown}{Logical, button displayed in dropdown.}
 }
 \description{
 Create a themed actionButton
