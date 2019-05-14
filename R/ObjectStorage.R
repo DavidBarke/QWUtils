@@ -59,9 +59,9 @@ ObjectStorage <- R6::R6Class(
 
     add_object = function(object) {
       if (!is.null(private$allowed_classes)) {
-        stopifnot(any(private$allowed_class %in% class(object)))
+        stopifnot(any(private$allowed_classes %in% class(object)))
       }
-      storage < private$storage()
+      storage <- private$storage()
       storage[[private$length() + 1]] <- object
       private$storage(storage)
     },
