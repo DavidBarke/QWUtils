@@ -90,7 +90,9 @@ ObjectStorage <- R6::R6Class(
     },
 
     get_object = function(name) {
+      print(private$storage_names())
       index <- which(private$storage_names() == name)
+      print(index)
       if (length(index) != 1) {
         stop(paste0("There are either no or multiple objects with name ", name))
       }
