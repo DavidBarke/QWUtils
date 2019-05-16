@@ -13,4 +13,6 @@ Imports:
     shiny,
     R6,
     shinyWidgets,
-    shinyBS
+    shinyBS,
+    R.utils,
+    purrr

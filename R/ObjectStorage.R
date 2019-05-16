@@ -32,6 +32,14 @@
 #'       \item{\code{name}}{Name of an R6 object.}
 #'     }
 #'   }
+#'   \item{\code{get_objects(names)}}{Get a list of objects from the storage
+#'     with \code{object$get_name() \%in\% names}.
+#'     \describe{
+#'       \item{\code{names}}{Character vector. Each element has to be a name of
+#'         an object in the storage.
+#'       }
+#'     }
+#'   }
 #' }
 #'
 #' @name ObjectStorage
@@ -55,15 +63,26 @@ ObjectStorage <- R6::R6Class(
       })
 
       private$allowed_classes <- allowed_classes
+
+      invisible(self)
     },
 
     add_object = function(object) {
+      if (!exists(
+        x = "get_name",
+        where = object
+      )) {
+        stop(
+          "ObjectStorage: object has to have a method with name \"get_name\""
+        )
+      }
       if (!is.null(private$allowed_classes)) {
         stopifnot(any(private$allowed_classes %in% class(object)))
       }
       storage <- private$storage()
       storage[[private$length() + 1]] <- object
       private$storage(storage)
+      invisible(self)
     },
 
     get_names = function() {
@@ -76,6 +95,19 @@ ObjectStorage <- R6::R6Class(
         stop(paste0("There are either no or multiple objects with name ", name))
       }
       private$storage()[[index]]
+    },
+
+    get_objects = function(names) {
+      if (!(all(names %in% self$get_names()))) {
+        stop("ObjectStorage: Not all names are present in the names of the
+          storage object.")
+      }
+      positions <- map_dbl(names, function(name) {
+        which(self$get_names() == name)
+      })
+      objects <- private$storage()[positions]
+      names(objects) <- names
+      objects
     }
   ),
   private = list(

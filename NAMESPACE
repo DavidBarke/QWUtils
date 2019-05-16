@@ -2,6 +2,7 @@
 
 export("%_%")
 export(.label)
+export(Node)
 export(ObjectStorage)
 export(actionButtonQW)
 export(fallback)
@@ -11,3 +12,4 @@ export(label_lang)
 export(label_lang_convert_fun)
 export(label_lang_list)
 export(maprange)
+export(source_directory)

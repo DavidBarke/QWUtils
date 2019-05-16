@@ -22,7 +22,7 @@ storage$get_object(name)
   \item{\code{new(allowed_classes = NULL)}}{Initialize the storage.
     \describe{
       \item{\code{allowed_classes}}{Character vector. \code{class(object)} has to
-      return at least one these classes for being added to the storage.}
+      return at least one of these classes for being added to the storage.}
     }
   }
   \item{\code{add_object(object)}}{Add an object to the storage.
@@ -30,11 +30,22 @@ storage$get_object(name)
       \item{\code{object}}{R6 object with public method \code{get_name()}.}
     }
   }
-  \item{\code{get_object(name)}}{Get an object from the storage with
-  \code{object$get_name() == name}.
-  \describe{
-    \item{\code{name}}{Name of an R6 object.}
+  \item{\code{get_names()}}{Get the names of the stored objects as a
+    character vector.
   }
+  \item{\code{get_object(name)}}{Get an object from the storage with
+    \code{object$get_name() == name}.
+    \describe{
+      \item{\code{name}}{Name of an R6 object.}
+    }
+  }
+  \item{\code{get_objects(names)}}{Get a list of objects from the storage
+    with \code{object$get_name() \%in\% names}.
+    \describe{
+      \item{\code{names}}{Character vector. Each element has to be a name of
+        an object in the storage.
+      }
+    }
   }
 }
 }

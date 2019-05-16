@@ -16,15 +16,15 @@ source_directory <-  function(
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'path':
-  path <- filePath(path)
-  if (!isDirectory(path))
+  path <- R.utils::filePath(path)
+  if (!R.utils::isDirectory(path))
     return(NULL)
 
   # Argument 'onError'
   onError <- match.arg(onError)
 
   # Argument 'verbose'
-  verbose <- Arguments$getVerbose(verbose)
+  verbose <- R.utils::Arguments$getVerbose(verbose)
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # start...
@@ -34,7 +34,7 @@ source_directory <-  function(
 
   # First, if recursive, follow all directories...
   if (recursive) {
-    verbose && cat(verbose, "Sourcing directory recursively: ", path)
+    verbose && R.utils::cat(verbose, "Sourcing directory recursively: ", path)
     dirs <- list.files(path=path, recursive=FALSE,
                        all.files=TRUE, full.names=TRUE)
     dirs <- dirs[!(basename(dirs) %in% c(".", ".."))]
@@ -44,12 +44,12 @@ source_directory <-  function(
       dirs <- sort(dirs)
 
     for (dir in dirs) {
-      pathname <- filePath(dir)
-      if (isDirectory(pathname)) {
-        verbose && cat(verbose, "Entering: ", pathname)
+      pathname <- R.utils::filePath(dir)
+      if (R.utils::isDirectory(pathname)) {
+        verbose && R.utils::cat(verbose, "Entering: ", pathname)
         sourcedFiles <- c(
           sourcedFiles,
-          source_directory_qw(
+          source_directory(
             pathname, pattern=pattern, recursive=recursive, envir=envir,
             onError=onError, verbose=verbose, modifiedOnly = modifiedOnly,  ...
           )
@@ -58,11 +58,11 @@ source_directory <-  function(
       }
     } # for (dir ...)
   } else {
-    verbose && cat(verbose, "Sourcing directory (non-recursively): ", path)
+    verbose && R.utils::cat(verbose, "Sourcing directory (non-recursively): ", path)
   }
 
   # Then, get all files in current directory...
-  files <- listDirectory(path, pattern=pattern, recursive=FALSE,
+  files <- R.utils::listDirectory(path, pattern=pattern, recursive=FALSE,
                          allNames=TRUE, fullNames=TRUE)
 
   # Source files in lexicographic order
@@ -71,7 +71,7 @@ source_directory <-  function(
 
   if (verbose) {
     if (length(files) > 0) {
-      cat(verbose, "Found *.R scripts:")
+      R.utils::cat(verbose, "Found *.R scripts:")
       readable <- (sapply(files, FUN=file.access, mode=4) == 0)
       bytes <- sapply(files, FUN=function(x) file.info(x)$size)
       df <- data.frame(filename=basename(files), bytes=bytes,
@@ -80,13 +80,13 @@ source_directory <-  function(
       # Not needed anymore
       df <- bytes <- readable <- NULL
     } else {
-      cat(verbose, "Found no *.R scripts.")
+      R.utils::cat(verbose, "Found no *.R scripts.")
     }
   }
 
   for (file in files) {
-    pathname <- filePath(file)
-    if (!isDirectory(pathname)) {
+    pathname <- R.utils::filePath(file)
+    if (!R.utils::isDirectory(pathname)) {
       # If the parent directory is called 'global' then source to
       # the global environment, otherwise the local job environment.
       parent <- basename(dirname(pathname))
@@ -95,7 +95,7 @@ source_directory <-  function(
 
       tryCatch({
         verbose && enter(verbose, "Loading (", type, ") source file: ",
-                         basename(pathname))
+                        basename(pathname))
 
         dots <- list(...)
         if (! "chdir" %in% names(dots)) {
@@ -112,7 +112,7 @@ source_directory <-  function(
         }
 
         do.call(
-          what = sourceTo,
+          what = R.utils::sourceTo,
           args = c(
             list(
               file = pathname,
@@ -133,14 +133,14 @@ source_directory <-  function(
           print(verbose, ex)
           tryCatch({
             # Display source code with erroneous line highlighted.
-            cat(verbose, displayCode(pathname, highlight=ex$message,
+            R.utils::cat(verbose, R.utils::displayCode(pathname, highlight=ex$message,
                                      pager="none"))
           }, error = function(ex) {})
         }
         verbose && exit(verbose, suffix="...failed")
 
         # An error was detected, but always log it.
-        verbose && cat(verbose, "Error when sourcing file ", pathname, ": ",
+        verbose && R.utils::cat(verbose, "Error when sourcing file ", pathname, ": ",
                        ex$message)
 
         if (onError == "skip") {
@@ -151,7 +151,7 @@ source_directory <-  function(
         } else {
           # Rethrow error.
           signalCondition(ex)
-          msg <- sprintf("sourceDirectory() failed to source '%s': %s",
+          msg <- sprintf("source_directory() failed to source '%s': %s",
                          pathname, ex$message)
           stop(msg)
         }
