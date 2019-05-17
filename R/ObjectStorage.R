@@ -26,10 +26,13 @@
 #'   \item{\code{get_names()}}{Get the names of the stored objects as a
 #'     character vector.
 #'   }
-#'   \item{\code{get_object(name)}}{Get an object from the storage with
-#'     \code{object$get_name() == name}.
+#'   \item{\code{get_object(name, lazy = FALSE)}}{Get an object from the storage
+#'     with \code{object$get_name() == name}.
 #'     \describe{
 #'       \item{\code{name}}{Name of an R6 object.}
+#'       \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a name
+#'         which is not present in the names of the storage for a short time.
+#'       }
 #'     }
 #'   }
 #'   \item{\code{get_objects(names)}}{Get a list of objects from the storage
@@ -93,10 +96,14 @@ ObjectStorage <- R6::R6Class(
       private$storage_names()
     },
 
-    get_object = function(name) {
+    get_object = function(name, allow_wrong_name) {
       index <- which(private$storage_names() == name)
       if (length(index) != 1) {
-        stop(paste0("There are either no or multiple objects with name ", name))
+        if (allow_wrong_name) {
+          index <- 1
+        } else {
+          stop(paste0("There are either no or multiple objects with name ", name))
+        }
       }
       private$storage()[[index]]
     },
