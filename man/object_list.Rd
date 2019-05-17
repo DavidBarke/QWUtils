@@ -4,7 +4,8 @@
 \alias{object_list}
 \title{Get name and type of objects from all the scripts of a directory}
 \usage{
-object_list(directory, recursive, chdir = FALSE, all.names = FALSE)
+object_list(directory, recursive = TRUE, chdir = FALSE,
+  all.names = FALSE)
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}

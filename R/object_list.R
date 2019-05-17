@@ -13,7 +13,7 @@
 #'
 #' @export
 object_list <- function(
-  directory, recursive, chdir = FALSE, all.names = FALSE
+  directory, recursive = TRUE, chdir = FALSE, all.names = FALSE
 ) {
   script_paths <- script_paths(directory, recursive = recursive)
 
