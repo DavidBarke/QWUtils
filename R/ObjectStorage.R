@@ -85,6 +85,10 @@ ObjectStorage <- R6::R6Class(
       invisible(self)
     },
 
+    get_length = function() {
+      length(private$storage())
+    },
+
     get_names = function() {
       private$storage_names()
     },
