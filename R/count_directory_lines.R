@@ -22,7 +22,7 @@ count_directory_lines <- function(
   scripts <- script_paths(directory, recursive = recursive)
 
   lines <- purrr::map_dbl(scripts, function(script) {
-    lines <- readLines(script)
+    lines <- suppressWarnings(readLines(script))
     if (remove == "comments") {
       sum(!stringr::str_detect(lines, "^[\\s]*#"))
     } else if (remove == "roxygen") {

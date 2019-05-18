@@ -33,10 +33,13 @@ storage$get_object(name)
   \item{\code{get_names()}}{Get the names of the stored objects as a
     character vector.
   }
-  \item{\code{get_object(name)}}{Get an object from the storage with
-    \code{object$get_name() == name}.
+  \item{\code{get_object(name, lazy = FALSE)}}{Get an object from the storage
+    with \code{object$get_name() == name}.
     \describe{
       \item{\code{name}}{Name of an R6 object.}
+      \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a name
+        which is not present in the names of the storage for a short time.
+      }
     }
   }
   \item{\code{get_objects(names)}}{Get a list of objects from the storage

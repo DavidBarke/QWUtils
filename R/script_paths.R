@@ -5,13 +5,14 @@
 #' @param directory A path to the directory containing the R scripts.
 #' @param recursive If \code{\link[base:logical]{TRUE}}, subdirectories are
 #' recursively searched for R scripts.
+#' @inheritParams base::list.files
 #'
 #' @export
-script_paths <- function(directory, recursive = TRUE) {
+script_paths <- function(directory, recursive = TRUE, full.names = TRUE) {
   dir(
     directory,
     recursive = recursive,
-    full.names = TRUE,
+    full.names = full.names,
     pattern = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$"
   )
 }

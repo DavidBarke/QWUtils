@@ -96,14 +96,10 @@ ObjectStorage <- R6::R6Class(
       private$storage_names()
     },
 
-    get_object = function(name, allow_wrong_name) {
+    get_object = function(name) {
       index <- which(private$storage_names() == name)
       if (length(index) != 1) {
-        if (allow_wrong_name) {
-          index <- 1
-        } else {
-          stop(paste0("There are either no or multiple objects with name ", name))
-        }
+        stop(paste0("There are either no or multiple objects with name ", name))
       }
       private$storage()[[index]]
     },

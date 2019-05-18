@@ -4,13 +4,17 @@
 \alias{script_paths}
 \title{Get paths of R scripts}
 \usage{
-script_paths(directory, recursive = TRUE)
+script_paths(directory, recursive = TRUE, full.names = TRUE)
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}
 
 \item{recursive}{If \code{\link[base:logical]{TRUE}}, subdirectories are
 recursively searched for R scripts.}
+
+\item{full.names}{a logical value.  If \code{TRUE}, the directory
+    path is prepended to the file names to give a relative file path.
+    If \code{FALSE}, the file names (rather than paths) are returned.}
 }
 \description{
 Get the paths of all R scripts inside a directory.
