@@ -10,7 +10,7 @@
 source_directory <-  function(
   path, pattern = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$", recursive = TRUE,
   envir = parent.frame(), onError = c("error", "warning", "skip"),
-  modifiedOnly = TRUE, ..., verbose = FALSE
+  modifiedOnly = FALSE, ..., verbose = FALSE
 ) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
