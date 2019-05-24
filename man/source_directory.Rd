@@ -6,7 +6,7 @@
 \usage{
 source_directory(path, pattern = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$",
   recursive = TRUE, envir = parent.frame(), onError = c("error",
-  "warning", "skip"), modifiedOnly = TRUE, ..., verbose = FALSE)
+  "warning", "skip"), modifiedOnly = FALSE, ..., verbose = FALSE)
 }
 \arguments{
 \item{path}{A path to a directory to be sourced.}

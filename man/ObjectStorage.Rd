@@ -12,7 +12,7 @@ R6Class for storing similar R6 objects.
 
 storage$add_object(object)
 
-storage$get_object(name)
+storage$get_object(id)
 }
 }
 
@@ -27,25 +27,25 @@ storage$get_object(name)
   }
   \item{\code{add_object(object)}}{Add an object to the storage.
     \describe{
-      \item{\code{object}}{R6 object with public method \code{get_name()}.}
+      \item{\code{object}}{R6 object with public method \code{get_id()}.}
     }
   }
-  \item{\code{get_names()}}{Get the names of the stored objects as a
+  \item{\code{get_ids()}}{Get the ids of the stored objects as a
     character vector.
   }
-  \item{\code{get_object(name, lazy = FALSE)}}{Get an object from the storage
-    with \code{object$get_name() == name}.
+  \item{\code{get_object(id, lazy = FALSE)}}{Get an object from the storage
+    with \code{object$get_id() == id}.
     \describe{
-      \item{\code{name}}{Name of an R6 object.}
-      \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a name
-        which is not present in the names of the storage for a short time.
+      \item{\code{id}}{id of an R6 object.}
+      \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a id
+        which is not present in the ids of the storage for a short time.
       }
     }
   }
-  \item{\code{get_objects(names)}}{Get a list of objects from the storage
-    with \code{object$get_name() \%in\% names}.
+  \item{\code{get_objects(ids)}}{Get a list of objects from the storage
+    with \code{object$get_id() \%in\% ids}.
     \describe{
-      \item{\code{names}}{Character vector. Each element has to be a name of
+      \item{\code{ids}}{Character vector. Each element has to be a id of
         an object in the storage.
       }
     }

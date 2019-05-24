@@ -1,13 +1,15 @@
 #' ObjectStorage
 #'
-#' R6Class for storing similar R6 objects.
+#' R6Class for storing similar R6 objects. These objects all need to implement
+#' the method get_id(), get_name() and is_removed(). The id of an object is
+#' unique in a storage whereas multiple objects can share the same name.
 #'
 #' @section Usage:
 #' \preformatted{storage = ObjectStorage$new(allowed_classes = NULL)
 #'
 #' storage$add_object(object)
 #'
-#' storage$get_object(name)
+#' storage$get_object(id)
 #' }
 #'
 #' @section Methods:
@@ -20,25 +22,22 @@
 #'   }
 #'   \item{\code{add_object(object)}}{Add an object to the storage.
 #'     \describe{
-#'       \item{\code{object}}{R6 object with public method \code{get_name()}.}
+#'       \item{\code{object}}{R6 object with public method \code{get_id()}.}
 #'     }
 #'   }
-#'   \item{\code{get_names()}}{Get the names of the stored objects as a
+#'   \item{\code{get_ids()}}{Get the ids of the stored objects as a
 #'     character vector.
 #'   }
-#'   \item{\code{get_object(name, lazy = FALSE)}}{Get an object from the storage
-#'     with \code{object$get_name() == name}.
+#'   \item{\code{get_object(id, lazy = FALSE)}}{Get an object from the storage
+#'     with \code{object$get_id() == id}.
 #'     \describe{
-#'       \item{\code{name}}{Name of an R6 object.}
-#'       \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a name
-#'         which is not present in the names of the storage for a short time.
-#'       }
+#'       \item{\code{id}}{id of an R6 object.}
 #'     }
 #'   }
-#'   \item{\code{get_objects(names)}}{Get a list of objects from the storage
-#'     with \code{object$get_name() \%in\% names}.
+#'   \item{\code{get_objects(ids)}}{Get a list of objects from the storage
+#'     with \code{object$get_id() \%in\% ids}.
 #'     \describe{
-#'       \item{\code{names}}{Character vector. Each element has to be a name of
+#'       \item{\code{ids}}{Character vector. Each element has to be a id of
 #'         an object in the storage.
 #'       }
 #'     }
@@ -59,8 +58,20 @@ ObjectStorage <- R6::R6Class(
         length(private$storage())
       })
 
+      private$storage_ids <- shiny::reactive({
+        purrr::map_chr(private$storage(), function(object) {
+          object$get_id()
+        })
+      })
+
+      private$storage_is_removed <- shiny::reactive({
+        purrr::map_lgl(private$storage(), function(object) {
+          object$is_removed()
+        })
+      })
+
       private$storage_names <- shiny::reactive({
-        map_chr(private$storage(), function(object) {
+        purrr::map_chr(private$storage(), function(object) {
           object$get_name()
         })
       })
@@ -72,11 +83,11 @@ ObjectStorage <- R6::R6Class(
 
     add_object = function(object) {
       if (!exists(
-        x = "get_name",
+        x = "get_id",
         where = object
       )) {
         stop(
-          "ObjectStorage: object has to have a method with name \"get_name\""
+          "ObjectStorage: object has to have a method with name \"get_id\""
         )
       }
       if (!is.null(private$allowed_classes)) {
@@ -92,28 +103,45 @@ ObjectStorage <- R6::R6Class(
       length(private$storage())
     },
 
-    get_names = function() {
-      private$storage_names()
+    # names of the ids are the current names
+    get_ids = function(removed = FALSE) {
+      if (removed) {
+        ids <- private$storage_ids()
+        names(ids) <- private$storage_names()
+      } else {
+        ids <- private$storage_ids()[!private$storage_is_removed()]
+        names(ids) <- private$storage_names()[!private$storage_is_removed()]
+      }
+
+      ids
     },
 
-    get_object = function(name) {
-      index <- which(private$storage_names() == name)
+    get_names = function(removed = FALSE) {
+      if (removed) {
+        return(private$storage_names())
+      } else {
+        return(private$storage_names()[!private$storage_is_removed()])
+      }
+    },
+
+    get_object = function(id) {
+      index <- which(private$storage_ids() == id)
       if (length(index) != 1) {
-        stop(paste0("There are either no or multiple objects with name ", name))
+        stop(paste0("There are either no or multiple objects with id ", id))
       }
       private$storage()[[index]]
     },
 
-    get_objects = function(names) {
-      if (!(all(names %in% self$get_names()))) {
-        stop("ObjectStorage: Not all names are present in the names of the
+    get_objects = function(ids) {
+      if (!(all(ids %in% self$get_ids()))) {
+        stop("ObjectStorage: Not all ids are present in the ids of the
           storage object.")
       }
-      positions <- map_dbl(names, function(name) {
-        which(self$get_names() == name)
+      positions <- map_dbl(ids, function(id) {
+        which(self$get_ids() == id)
       })
       objects <- private$storage()[positions]
-      names(objects) <- names
+      ids(objects) <- ids
       objects
     }
   ),
@@ -121,6 +149,8 @@ ObjectStorage <- R6::R6Class(
     allowed_classes = NULL,
     length = NULL,
     storage = NULL,
+    storage_ids = NULL,
+    storage_is_removed = NULL,
     storage_names = NULL
   )
 )
