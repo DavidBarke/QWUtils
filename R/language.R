@@ -9,10 +9,7 @@
 #' @export
 label_lang <- function(...) {
   label_list <- list(...)
-  # Wird in endgültiger Version entfernt
-  if (!exists(".language")) {
-    return(label_list[[1]])
-  }
+  .language <- getOption(".language", 1)
   label <- label_list[[.language]]
   return(label)
 }
