@@ -109,7 +109,9 @@ ObjectStorage <- R6::R6Class(
 
     # names of the ids are the current names
     get_ids = function() {
-      ids <- map(names(private$storage()), function(x) x)
+      ids <- map_chr(private$storage(), function(object) {
+        object$get_id()
+      })
       names(ids) <- private$storage_names()
       unlist(ids)
     },
