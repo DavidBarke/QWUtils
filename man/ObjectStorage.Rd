@@ -4,7 +4,9 @@
 \alias{ObjectStorage}
 \title{ObjectStorage}
 \description{
-R6Class for storing similar R6 objects.
+R6Class for storing similar R6 objects. These objects all need to implement
+the method get_id() and get_name(). The id of an object is
+unique in a storage whereas multiple objects can share the same name.
 }
 \section{Usage}{
 
@@ -25,21 +27,23 @@ storage$get_object(id)
       return at least one of these classes for being added to the storage.}
     }
   }
-  \item{\code{add_object(object)}}{Add an object to the storage.
+  \item{\code{add_object(object)}}{Add an object to the storage:
     \describe{
-      \item{\code{object}}{R6 object with public method \code{get_id()}.}
+      \item{\code{object}}{R6 object with public methods \code{get_id()},
+        and \code{get_name()}.}
     }
   }
-  \item{\code{get_ids()}}{Get the ids of the stored objects as a
-    character vector.
+  \item{\code{"g"et_ids()}}{Get the ids of the stored objects as a character
+    vector named with the object's names.
   }
-  \item{\code{get_object(id, lazy = FALSE)}}{Get an object from the storage
+  \item{\code{get_length()}}{Get the length of the storage.}
+  \item{\code{get_names()}}{Get the objects' names which aren't necessarily
+    unique.
+  }
+  \item{\code{get_object(id)}}{Get an object from the storage
     with \code{object$get_id() == id}.
     \describe{
       \item{\code{id}}{id of an R6 object.}
-      \item{\code{lazy}}{If \code{\link[base:logical]{TRUE}}, allow a id
-        which is not present in the ids of the storage for a short time.
-      }
     }
   }
   \item{\code{get_objects(ids)}}{Get a list of objects from the storage

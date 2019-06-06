@@ -23,11 +23,10 @@
 #'   \item{\code{add_object(object)}}{Add an object to the storage:
 #'     \describe{
 #'       \item{\code{object}}{R6 object with public methods \code{get_id()},
-#'         and \code{get_name()}}.
-#'       }
+#'         and \code{get_name()}.}
 #'     }
 #'   }
-#'   \item{\code{get_ids()}}{Get the ids of the stored objects as a character
+#'   \item{\code{"g"et_ids()}}{Get the ids of the stored objects as a character
 #'     vector named with the object's names.
 #'   }
 #'   \item{\code{get_length()}}{Get the length of the storage.}

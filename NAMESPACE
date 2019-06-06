@@ -2,6 +2,10 @@
 
 export("%_%")
 export(.label)
+export(ControlChart)
+export(ControlChartPhase)
+export(ControlChartSample)
+export(FacDesign)
 export(Node)
 export(ObjectStorage)
 export(actionButtonQW)
