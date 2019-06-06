@@ -40,7 +40,7 @@
 #'   }
 #'   \item{\code{get_name()}}{Get the factorial design's name.
 #'   }
-#'   \item{\code{get_names(fac = FALSE, index = FALSE, name = FALSE, response = FALSE)}}{
+#'   \item{\code{get_names()}}{
 #'   Get a list with the following entries:
 #'     \tabular{ll}{
 #'       fac \tab The variable factors' names. \cr
@@ -105,16 +105,13 @@ FacDesign <- R6::R6Class(
       private$names$name()
     },
 
-    get_names = function(
-      fac = FALSE, index = FALSE, name = FALSE, response = FALSE
-    ) {
-      .names <- list()
-      if (fac) .names$fac <- private$names$fac()
-      if (index) .names$index <- private$names$index()
-      if (name) .names$name <- private$names$name
-      if (response) .names$response <- private$names$response()
-
-      .names
+    get_names = function() {
+      list(
+        fac = private$names$fac(),
+        index = private$names$index(),
+        name = private$names$name,
+        response = private$names$response()
+      )
     },
 
     get_table = function(
