@@ -22,28 +22,28 @@ control_chart$get_table()
 \describe{
   \item{\code{new(name, type = c("xbar_R", "xbar_s", "R", "s", "p"))}}{
   Initialize the control chart.
-    \describe{
-      \item{\code{name}}{\code{\link[base:character]{Character}}. Name of
-      the control chart.}
-      \item{\code{type}}{\code{\link[base:character]{Character}}. Type of
-      the control chart.}
+    \tabular{ll}{
+      \code{name} \tab \code{\link[base:character]{Character}}. Name of
+      the control chart. \cr
+      \code{type} \tab \code{\link[base:character]{Character}}. Type of
+      the control chart.
     }
   }
   \item{\code{add_control_line(quantile = 0)}}{Add a \code{\link{ControlChartControlLine}}
   to the control chart.
-    \describe{
-      \item{\code{quantile}}{\code{\link[base:numeric]{Numeric}}. The
-      quantile which is used to calculate the value of the control line.}
+    \tabular{ll}{
+      \code{quantile} \tab \code{\link[base:numeric]{Numeric}}. The
+      quantile which is used to calculate the value of the control line.
     }
   }
   \item{\code{add_phase(name, preliminary = FALSE)}}{Add a \code{link{ControlChartPhase}}
   to the control chart.
-    \describe{
-      \item{\code{name}}{\code{\link[base:character]{Character}}. Name of
-      the phase.}
-      \item{\code{preliminary}}{\code{\link[base:logical]{Logical}}. If
+    \tabular{ll}{
+      \code{name} \tab \code{\link[base:character]{Character}}. Name of
+      the phase. \cr
+      \code{preliminary} \tab \code{\link[base:logical]{Logical}}. If
       \code{\link[base:logical]{TRUE}}, phases values are used to calculate
-      the control line values, otherwise not.}
+      the control line values, otherwise not.
     }
   }
   \item{\code{get_control_line(id = id)}}{Get the control chart's control line
@@ -67,11 +67,11 @@ control_chart$get_table()
   }
   \item{\code{get_phase_ids(preliminary = NULL)}}{Get all phases ids as a
   character vector.
-    \describe{
-      \item{\code{preliminary}}{If \code{\link[base:NULL]{NULL}} all ids,
+    \tabular{ll}{
+      \code{preliminary} \tab If \code{\link[base:NULL]{NULL}} all ids,
         if \code{\link[base:logical]{TRUE}} only ids of preliminary phases,
         if \code{\link[base:logical]{FALSE}} only ids of non-preliminary
-        phases are returned.}
+        phases are returned.
     }
   }
   \item{\code{get_plot()}}{Get the control chart's plot as a
@@ -80,21 +80,21 @@ control_chart$get_table()
   \item{\code{get_table(sample_count = c("chart", "phase"),
   preliminary = NULL)}}{Get a \code{\link[tibble:tibble]{tibble}} with
   columns \code{"phase"}, \code{"sample"}, \code{"value"}.
-    \describe{
-      \item{\code{sample_count}}{If \code{"chart"} samples are counted from
+    \tabular{ll}{
+      \code{sample_count} \tab If \code{"chart"} samples are counted from
       the perspective of the chart, if \code{"phase"} from the perspective
-      of each phase.}
-      \item{\code{preliminary}}{If \code{\link[base:NULL]{NULL}} all rows,
+      of each phase. \cr
+      \code{preliminary} \tab If \code{\link[base:NULL]{NULL}} all rows,
         if \code{\link[base:logical]{TRUE}} only rows of preliminary phases,
         if \code{\link[base:logical]{FALSE}} only rows of non-preliminary
-        phases are returned.}
+        phases are returned.
     }
   }
   \item{\code{get_type()}}{Get the control chart's type.
   }
   \item{\code{set_name(name)}}{Set the control chart's name.
-    \describe{
-      \item{\code{name}}{\code{\link[base:character]{Character}}. New name.}
+    \tabular{ll}{
+      \code{name} \tab \code{\link[base:character]{Character}}. New name.
     }
   }
   \item{\code{set_phase_names(new_names, old_names = NULL)}}{Set the names
@@ -102,17 +102,17 @@ control_chart$get_table()
   length of \code{new_names} must be equal to the number of the control
   chart's phases, otherwise the length of \code{new_names} and \code{old_names}
   has to be equal.
-    \describe{
-      \item{\code{new_names}}{\code{\link[base:character]{Character}}
-      vector.}
-      \item{\code{old_names}}{\code{\link[base:character]{Character}}
-      vector or \code{\link[base:NULL]{NULL}}.}
+    \tabular{ll}{
+      \code{new_names} \tab \code{\link[base:character]{Character}}
+      vector. \cr
+      \code{old_names} \tab \code{\link[base:character]{Character}}
+      vector or \code{\link[base:NULL]{NULL}}.
     }
   }
   \item{\code{set_type(type = c("xbar_R", "xbar_s", "R", "s", "p"))}}{Set
   the control chart's type.
-    \describe{
-      \item{\code{type}}{\code{\link[base:character]{Character}}. New type.}
+    \tabular{ll}{
+      \code{type} \tab \code{\link[base:character]{Character}}. New type.
     }
   }
 }

@@ -22,15 +22,15 @@ storage$get_object(id)
 
 \describe{
   \item{\code{new(allowed_classes = NULL)}}{Initialize the storage.
-    \describe{
-      \item{\code{allowed_classes}}{Character vector. \code{class(object)} has to
-      return at least one of these classes for being added to the storage.}
+    \tabular{ll}{
+      \code{allowed_classes} \tab Character vector. \code{class(object)} has to
+      return at least one of these classes for being added to the storage.
     }
   }
   \item{\code{add_object(object)}}{Add an object to the storage:
-    \describe{
-      \item{\code{object}}{R6 object with public methods \code{get_id()},
-        and \code{get_name()}.}
+    \tabular{ll}{
+      \code{object} \tab R6 object with public methods \code{get_id()},
+        and \code{get_name()}.
     }
   }
   \item{\code{"g"et_ids()}}{Get the ids of the stored objects as a character
@@ -42,16 +42,15 @@ storage$get_object(id)
   }
   \item{\code{get_object(id)}}{Get an object from the storage
     with \code{object$get_id() == id}.
-    \describe{
-      \item{\code{id}}{id of an R6 object.}
+    \tabular{ll}{
+      \code{id} \tab id of an R6 object.
     }
   }
   \item{\code{get_objects(ids)}}{Get a list of objects from the storage
     with \code{object$get_id() \%in\% ids}.
-    \describe{
-      \item{\code{ids}}{Character vector. Each element has to be a id of
+    \tabular{ll}{
+      \code{ids} \tab Character vector. Each element has to be a id of
         an object in the storage.
-      }
     }
   }
 }

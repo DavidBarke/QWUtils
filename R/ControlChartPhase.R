@@ -11,18 +11,18 @@
 #' @section Methods:
 #' \describe{
 #'   \item{\code{new(name, preliminary = FALSE)}}{Initialize the phase.
-#'     \describe{
-#'       \item{\code{name}}{\code{\link[base:character]{Character}}. The name
-#'       of the phase.}
-#'       \item{\code{preliminary}}{If \code{\link[base:logical]{TRUE}}, the
+#'     \tabular{ll}{
+#'       \code{name} \tab \code{\link[base:character]{Character}}. The name
+#'       of the phase. \cr
+#'       \code{preliminary} \tab If \code{\link[base:logical]{TRUE}}, the
 #'       phase is used to calculate the control line values of the parent
-#'       control chart, otherwise not.}
+#'       control chart, otherwise not.
 #'     }
 #'   }
 #'   \item{\code{add_sample(sample)}}{Add a \code{\link{ControlChartSample}} to
 #'   the phase.
-#'     \describe{
-#'       \item{\code{sample}}{A \code{\link{ControlChartSample}}.}
+#'     \tabular{ll}{
+#'       \code{sample} \tab A \code{\link{ControlChartSample}}.
 #'     }
 #'   }
 #'   \item{\code{get_id()}}{Get the phase's id.
@@ -45,8 +45,8 @@
 #'   }
 #'   \item{\code{set_preliminary(value)}}{Set whether the phase is preliminary
 #'   or not.
-#'     \describe{
-#'       \item{\code{value}}{A \code{\link[base:logical]{logical}}.}
+#'     \tabular{ll}{
+#'       \code{value} \tab A \code{\link[base:logical]{logical}}.
 #'     }
 #'   }
 #' }

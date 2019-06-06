@@ -7,34 +7,46 @@
 #' arguments \code{name} and \code{session} is mandatory. The root or entry node to
 #' a tree obviously has no parent.
 #'
-#' @usage
-#' NULL
+#' @section Usage:
+#' \preformatted{node <- Node$new(name, parent, session)
+#' }
 #'
-#' @format
-#' NULL
-#'
-#' @return
-#' Public methods and fields are accesible using the '$' operator.
-#' \item{add_child(child)}{Add a \code{child} node to private$children}
-#' \item{child(path_to_child)}{Get a child of the node determined by the character
-#' vector \code{path_to_child}. If there is a node in private$children with the name
-#' of the first element of \code{path_to_child}, \code{child()} looks in the children
-#' of this node for an child node with the name of the second element of
-#' \code{path_to_child} and so on and returns the last child found. Calling this
-#' method without arguments has the same effect as \code{children_names()}}
-#' \item{children_names()}{Returns the names of all children nodes as a character
-#' vector.}
-#' \item{create_list()}{Returns a list representing all child and child-child nodes.}
-#' \item{get(what)}{Returns the private field or method with the name \code{what}.}
-#' \item{sibling(name)}{Returns the sibling node with name \code{name}. Calling this
-#' method without arguments returns the names of all siblings.}
-#'
-#' The following private fields and methods which are accesible via
-#' \code{get()}:
-#' \item{children}{A list of nodes.}
-#' \item{name}{A character string, which is unique within \code{sibling()}.}
-#' \item{parent}{A parent node.}
-#' \item{session}{Usually a shiny session object.}
+#' @section Methods:
+#' \describe{
+#'   \item{\code{new(name, parent, session)}}{Initialize the node. Arguments
+#'   \code{name} and \code{session} are mandatory.
+#'     \tabular{ll}{
+#'       \code{name} \tab \code{\link[base:character]{Character}}. Node's name. \cr
+#'       \code{parent} \tab A \code{Node} object. \cr
+#'       \code{session} \tab A \code{\link[shiny:session]{Session}} object.
+#'     }
+#'   }
+#'   \item{\code{add_child(child)}}{Add a child to the node. You usually don't
+#'   need to call this function.
+#'     \tabular{ll}{
+#'        \code{child} \tab A \code{Node} object.
+#'     }
+#'   }
+#'   \item{\code{child(path_to_child)}}{Get a child of the node determined by
+#'   the character vector \code{path_to_child}. If there is a node in with the
+#'   name of the first element of \code{path_to_child}, \code{child()} looks in
+#'   the children of this node for an child node with the name of the second
+#'   element of \code{path_to_child} and so on and returns the last child found.
+#'   Calling this method without arguments has the same effect as
+#'   }
+#'   \item{\code{children_names()}}{Returns the names of all children nodes as a
+#'   \code{\link[base:character]{character}} vector.
+#'   }
+#'   \item{\code{create_list()}}{Returns a list representing all child and
+#'   child-child nodes.
+#'   }
+#'   \item{\code{get(what)}}{Returns the private field or method with the name
+#'     \code{what}.
+#'   }
+#'   \item{\code{sibling(name)}}{Returns the sibling node with name \code{name}.
+#'   Calling this method without arguments returns the names of all siblings.
+#'   }
+#' }
 #'
 #' @examples
 #' \dontrun{
