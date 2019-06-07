@@ -18,13 +18,13 @@
 #'       factors. \cr
 #'       \code{center} \tab \code{\link[base:integer]{Integer}}. Number of
 #'       center points. \cr
-#'       \code{fac_names} \tab A \code{\link[base:character]{character}} vector
+#'       \code{fac_names} \tab \code{\link[base:character]{Character}} vector
 #'       containing the names of the variable factors. \cr
 #'       \code{response_name} \tab \code{\link[base:character]{Character}}. Name
 #'       of the response variable. \cr
 #'       \code{index_name} \tab \code{\link[base:character]{Character}}. Name of
 #'       the index variable. \cr
-#'       \code{response} \tab A \code{\link[base:numeric]{numeric}} vector
+#'       \code{response} \tab \code{\link[base:numeric]{Numeric}} vector
 #'       containing the values of the response variable for the standardised
 #'       factorial design. If \code{response = NULL}, you have to add a response
 #'       later via \code{this$add_response()}.
@@ -33,7 +33,7 @@
 #'   \item{\code{add_response(response)}}{Add or update the response of the
 #'   factorial design.
 #'     \tabular{ll}{
-#'       \code{response} \tab A \code{\link[base:numeric]{numeric}} vector
+#'       \code{response} \tab \code{\link[base:numeric]{Numeric}} vector
 #'       containing the values of the response variable for the standardised
 #'       factorial design.
 #'     }
@@ -50,7 +50,46 @@
 #'     }
 #'    The arguments decide wheter a name is part of the list or not.
 #'   }
-#'   \item{\code{get_table()}}{
+#'   \item{\code{get_table(randomized = TRUE, index = TRUE, factors = TRUE,
+#'   response = TRUE, center = FALSE)}}{Get a \code{\link[tibble:tibble]{tibble}}
+#'   representing the factorial design.
+#'     \tabular{ll}{
+#'       \code{randomized} \tab If \code{\link[base:logical]{TRUE}}, the rows are
+#'       ordered in run order and not in standardised order. \cr
+#'       \code{index} \tab If \code{\link[base:logical]{TRUE}}, the index column
+#'       is included in the output. \cr
+#'       \code{factors} \tab If \code{\link[base:logical]{TRUE}}, the factor
+#'       columns are included in the output. \cr
+#'       \code{response} \tab If \code{\link[base:logical]{TRUE}}, the response
+#'       column is included in the output. \cr
+#'       \code{center} \tab If \code{\link[base:logical]{TRUE}}, the rows
+#'       containing observations for the center points are included in the output.
+#'     }
+#'   }
+#'   \item{\code{has_response()}}{Returns a \code{\link[base:logical]{logical}}
+#'   indicating whether the factorial design has a response or not.
+#'   }
+#'   \item{\code{nrow()}}{Get the number of rows of the factorial design.
+#'   }
+#'   \item{\code{rename_fac_names(new_names, old_names = NULL)}}{Set the factors'
+#'   names. If \code{old_names = NULL} the length of \code{new_names} must be
+#'   equal to the number of factors, otherwise the length of \code{new_names}
+#'   and \code{old_names} has to be equal.
+#'     \tabular{ll}{
+#'       \code{new_names} \tab \code{\link[base:character]{Character}}
+#'       vector. \cr
+#'       \code{old_names} \tab \code{\link[base:character]{Character}}
+#'       vector or \code{\link[base:NULL]{NULL}}.
+#'     }
+#'   }
+#'   \item{\code{rename_index_name(new_name)}}{Rename the index  with the
+#'   \code{\link[base:character]{character}} \code{new_name}.
+#'   }
+#'   \item{\code{rename_name(new_name)}}{Rename the factorial design with the
+#'   \code{\link[base:character]{character}} \code{new_name}.
+#'   }
+#'   \item{\code{rename_response_name(new_name)}}{Rename the response with the
+#'   \code{\link[base:character]{character}} \code{new_name}.
 #'   }
 #' }
 #'
@@ -109,7 +148,7 @@ FacDesign <- R6::R6Class(
       list(
         fac = private$names$fac(),
         index = private$names$index(),
-        name = private$names$name,
+        name = private$names$name(),
         response = private$names$response()
       )
     },
@@ -143,7 +182,7 @@ FacDesign <- R6::R6Class(
       private$.nrow()
     },
 
-    rename_fac_names = function(old_names = NULL, new_names) {
+    rename_fac_names = function(new_names, old_names = NULL) {
       if (is.null(old_names)) {
         stopifnot(
           length(new_names) == length(private$names$fac()),

@@ -63,3 +63,79 @@ actionButtonQW <- function(
 
   ui
 }
+
+#' Search Input
+#'
+#' @export
+searchInputQW <- function(
+  inputId, label = NULL, value = "", placeholder = NULL, btnSearch = NULL,
+  btnReset = NULL, resetValue = "", width = NULL, disable_text = FALSE,
+  disable_search = FALSE, disable_reset = FALSE
+) {
+  value <- shiny::restoreInput(id = inputId, default = value)
+
+  if (!is.null(btnSearch)) {
+    btnSearch <- htmltools::tags$button(
+      class = "btn btn-default btn-addon action-button",
+      id = paste0(inputId, "_search"),
+      type = "button",
+      btnSearch
+    )
+
+    if (disable_search) btnSearch <- htmltools::tagAppendAttributes(
+      btnSearch, disabled = "disabled"
+    )
+
+  }
+
+  if (!is.null(btnReset)) {
+    btnReset <- htmltools::tags$button(
+      class = "btn btn-default btn-addon action-button",
+      id = paste0(inputId, "_reset"),
+      type = "button",
+      btnReset
+    )
+
+    if (disable_reset) btnReset <- htmltools::tagAppendAttributes(
+      btnReset, disabled = "disabled"
+    )
+
+  }
+  css_btn_addon <- paste0(
+    ".btn-addon{", "font-size:14.5px;", "margin:0 0 0 0 !important;",
+    "display: inline-block !important;","}"
+  )
+
+  text_input <- htmltools::tags$input(
+    id = paste0(inputId,  "_text"),
+    style = "border-radius: 0.25em 0 0 0.25em !important;",
+    type = "text",
+    class = "form-control",
+    value = value,
+    placeholder = placeholder
+  )
+
+  if (disable_text) text_input <- htmltools::tagAppendAttributes(
+    text_input, disabled = "disabled"
+  )
+
+  searchTag <- htmltools::tags$div(
+    class = "form-group shiny-input-container",
+    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    if (!is.null(label)) htmltools::tags$label(label, `for` = inputId),
+    htmltools::tags$div(
+      id = inputId,
+      `data-reset` = !is.null(resetValue),
+      `data-reset-value` = resetValue,
+      class = "input-group search-text",
+      text_input,
+      htmltools::tags$div(
+        class = "input-group-btn",
+        btnReset,
+        btnSearch
+      )
+    ),
+    singleton(tags$head(tags$style(css_btn_addon))))
+
+  shinyWidgets:::attachShinyWidgetsDep(searchTag)
+}
