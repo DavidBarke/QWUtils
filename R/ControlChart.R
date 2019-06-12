@@ -329,7 +329,7 @@ ControlChart <- R6::R6Class(
 
       if (length(phase_ids) > 0) {
         df <- map2_dfr(phase_ids, names(phase_ids), function(id, name) {
-          df <- self$get_phase_value(id)
+          df <- self$get_phase(id)$get_value()
           if (nrow(df) > 0) {
             df$phase <- name
           } else {
