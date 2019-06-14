@@ -1,6 +1,13 @@
 #' Observed vector input
 #'
 #' @inheritParams checked_text_input
+#' @param input,output,session Called by \code{\link[shiny:callModule]{callModule}}.
+#' @param .error_controller_text \code{\link{ErrorController}} or
+#'   \code{\link{ErrorControllerList}} for controlling the text of the
+#'   \code{\link[shiny:textInput]{textInput}}.
+#' @param .error_controller_value \code{\link{ErrorController}} or
+#'   \code{\link{ErrorControllerList}} for controlling the module's value
+#'   (\code{\link[base:numeric]{numeric}} vector).
 #'
 #' @export
 observed_vector_input <- function(

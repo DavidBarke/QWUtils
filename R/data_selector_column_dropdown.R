@@ -1,3 +1,8 @@
+#' @rdname data_selector_column_dropdown_ui
+#'
+#' @param id The module's id
+#'
+#' @export
 data_selector_column_dropdown_ui <- function(id) {
   ns <- NS(id)
 
@@ -45,6 +50,14 @@ data_selector_column_dropdown_ui <- function(id) {
   )
 }
 
+#' Dropdown for column actions
+#'
+#' @param input,output,session Called by \code{\link[shiny:callModule]{callModule}}.
+#' @inheritParams observed_vector_input
+#' @param group_name,dataset_name,column_name \code{\link[shiny:reactive]{Reactives}}
+#'   containing the group, dataset and column selected by the user.
+#'
+#' @export
 data_selector_column_dropdown <- function(
   input, output, session, .data, .values, .parent, group_name, dataset_name,
   column_name
