@@ -80,7 +80,7 @@ ControlChartSample <- R6::R6Class(
   ),
   private = list(
     id = character(),
-    value = NULL,
-    name = NULL
+    name = NULL,
+    value = NULL
   )
 )

@@ -5,8 +5,8 @@
 #' amout of elements may be added in the \code{\link[shiny:shiny-package]{shiny}}
 #' server function. After adding all elements the DataSelector gets activated
 #' by invoking the method \code{this$callModule()}. The display of the elements
-#' is handled by \code{data_selector_output}. For each element of a
-#' \code{\link{DataSelector}} \code{data_selector_output} has to be called
+#' is handled by \code{\link{data_selector_output}}. For each element of a
+#' \code{\link{DataSelector}} \code{\link{data_selector_output}} has to be called
 #' either in the \code{ui} function or inside of
 #' \code{\link[shiny:renderUI]{renderUI}} to display the UI of the corresponding
 #' element.
@@ -205,7 +205,7 @@ DataSelector <- R6::R6Class(
         if (extended) {
           label <- div(
             label,
-            module_data_selector_column_dropdown_ui(
+            data_selector_column_dropdown_ui(
               id = ns(id %_% "column_dropdown")
             )
           )
@@ -214,7 +214,7 @@ DataSelector <- R6::R6Class(
             id %_% "column_dropdown",
             envir = .envir,
             callModule(
-              module = module_data_selector_column_dropdown,
+              module = data_selector_column_dropdown,
               id = id %_% "column_dropdown",
               .data = .data,
               .values = .values,
@@ -272,7 +272,7 @@ DataSelector <- R6::R6Class(
         if (extended) {
           label <- div(
             label,
-            module_data_selector_dataset_dropdown_ui(
+            data_selector_dataset_dropdown_ui(
               id = ns(id %_% "dataset_dropdown")
             )
           )
@@ -281,7 +281,7 @@ DataSelector <- R6::R6Class(
             id %_% "dataset_dropdown",
             envir = .envir,
             callModule(
-              module = module_data_selector_dataset_dropdown,
+              module = data_selector_dataset_dropdown,
               id = id %_% "dataset_dropdown",
               .data = .data,
               .values = .values,
@@ -327,7 +327,7 @@ DataSelector <- R6::R6Class(
         if (extended) {
           label <- div(
             label,
-            module_data_selector_group_dropdown_ui(
+            data_selector_group_dropdown_ui(
               id = ns(id %_% "group_dropdown")
             )
           )
@@ -336,7 +336,7 @@ DataSelector <- R6::R6Class(
             id %_% "group_dropdown",
             envir = .envir,
             callModule(
-              module = module_data_selector_group_dropdown,
+              module = data_selector_group_dropdown,
               id = id %_% "group_dropdown",
               .data = .data,
               .values = .values,
@@ -389,8 +389,6 @@ DataSelector <- R6::R6Class(
 )
 
 #' data_selector_output
-#'
-#' @rdname DataSelector
 #'
 #' @param id id of the corresponding \code{\link{DataSelector}}.
 #' @param element_id id of the element to display

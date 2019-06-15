@@ -27,7 +27,7 @@
 #'
 #' @return
 #'
-#' Module returns a list of \code{\link[shiny:reactive]{reactives}}:
+#' \code{checked_text_input} returns a list of \code{\link[shiny:reactive]{reactives}}:
 #'
 #' \tabular{ll}{
 #'   \code{name} \tab Current value of the text input. \cr

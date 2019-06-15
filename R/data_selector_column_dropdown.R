@@ -1,4 +1,4 @@
-#' @rdname data_selector_column_dropdown_ui
+#' @rdname data_selector_column_dropdown
 #'
 #' @param id The module's id
 #'

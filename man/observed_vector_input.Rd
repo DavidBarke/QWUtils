@@ -12,11 +12,7 @@ observed_vector_input(input, output, session, .data, .values, .parent,
 observed_vector_input_ui(id)
 }
 \arguments{
-\item{input}{Called by \code{\link[shiny]{callModule}}.}
-
-\item{output}{Called by \code{\link[shiny]{callModule}}.}
-
-\item{session}{Called by \code{\link[shiny]{callModule}}.}
+\item{input, output, session}{Called by \code{\link[shiny:callModule]{callModule}}.}
 
 \item{.data}{The \code{.data} object.}
 
@@ -30,6 +26,14 @@ you could also use any other HTML, like an image.}
 \item{.value}{Function without an argument (e.g
 \code{\link[shiny:reactive]{reactive}}) or vector containing the initial
 value of the text input.}
+
+\item{.error_controller_text}{\code{\link{ErrorController}} or
+\code{\link{ErrorControllerList}} for controlling the text of the
+\code{\link[shiny:textInput]{textInput}}.}
+
+\item{.error_controller_value}{\code{\link{ErrorController}} or
+\code{\link{ErrorControllerList}} for controlling the module's value
+(\code{\link[base:numeric]{numeric}} vector).}
 
 \item{id}{The module's id.}
 }
