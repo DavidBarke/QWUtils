@@ -104,19 +104,38 @@ ControlChartPhase <- R6::R6Class(
 
     get_value = function() {
       sample_ids <- private$sample_storage$get_ids()
-      table <- purrr::map2_dfr(sample_ids, seq_along(sample_ids), function(id, index) {
-        value <- private$sample_storage$get_object(id)$get_value()
-        tibble::tibble(
-          sample = index,
-          value = private$sample_storage$get_object(id)$get_value()
-        )
+
+      samples_nested <- purrr::map(sample_ids, function(id) {
+        private$sample_storage$get_object(id)$get_value
       })
 
-      if (nrow(table) == 0) {
+      samples <- unlist(samples_nested)
+
+      print("SAMPLES")
+      print(samples)
+
+
+
+      # table <- purrr::map2_dfr(sample_ids, seq_along(sample_ids), function(id, index) {
+      #   value <- private$sample_storage$get_object(id)$get_value()
+      #   tibble::tibble(
+      #     sample = index,
+      #     value = private$sample_storage$get_object(id)$get_value()
+      #   )
+      # })
+
+      if (length(samples) == 0) {
         table <- tibble::tibble(
           sample = numeric(),
           value = numeric()
         )
+      } else {
+        table <- purrr::map2_dfr(samples, seq_along(samples), function(id, index) {
+          tibble::tibble(
+            sample = index,
+            value = private$sample_storage$get_object(id)$get_value()
+          )
+        })
       }
 
       table

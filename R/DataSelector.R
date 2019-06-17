@@ -146,7 +146,7 @@ DataSelector <- R6::R6Class(
           id %_% "column_name",
           envir = .envir,
           reactive({
-            input[[id %_% "select_column"]]
+            req(input[[id %_% "select_column"]])
           })
         )
 
@@ -246,6 +246,12 @@ DataSelector <- R6::R6Class(
             multiple = multiple
           )
         })
+
+        return_list <- list()
+
+        return_list[["name"]] <- shiny::reactive({req(input[[id %_% "select_column"]])})
+
+        return(return_list)
       }
 
       self
@@ -259,7 +265,7 @@ DataSelector <- R6::R6Class(
           id %_% "dataset_name",
           envir = .envir,
           reactive({
-            input[[id %_% "select_dataset"]]
+            req(input[[id %_% "select_dataset"]])
           })
         )
       }
@@ -301,6 +307,12 @@ DataSelector <- R6::R6Class(
             )
           )
         })
+
+        return_list <- list()
+
+        return_list[["name"]] <- get(id %_% "dataset_name", envir = .envir)
+
+        return(return_list)
       }
 
       self
@@ -314,7 +326,7 @@ DataSelector <- R6::R6Class(
           id %_% "group_name",
           envir = .envir,
           reactive({
-            input[[id %_% "select_group"]]
+            req(input[[id %_% "select_group"]])
           })
         )
       }
@@ -353,6 +365,12 @@ DataSelector <- R6::R6Class(
             choices = .data$get_group_names()
           )
         })
+
+        return_list <- list()
+
+        return_list[["name"]] <- get(id %_% "group_name", envir = .envir)
+
+        return(return_list)
       }
 
       self
@@ -377,9 +395,13 @@ DataSelector <- R6::R6Class(
         element(input, output, session, .data, .values, self, .envir)
       })
 
-      map(private$elements_server, function(element) {
+      return_list <- map(private$elements_server, function(element) {
         element(input, output, session, .data, .values, self, .envir)
       })
+
+      print(return_list)
+
+      return(return_list)
     },
 
     elements_reactive_list = list(),
