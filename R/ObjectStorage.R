@@ -40,7 +40,8 @@
 #'     }
 #'   }
 #'   \item{\code{get_objects(ids)}}{Get a list of objects from the storage
-#'     with \code{object$get_id() \%in\% ids}.
+#'     with \code{object$get_id() \%in\% ids}. If \code{ids} is missing get
+#'     a list with all objects.
 #'     \tabular{ll}{
 #'       \code{ids} \tab Character vector. Each element has to be a id of
 #'         an object in the storage.
@@ -126,6 +127,10 @@ ObjectStorage <- R6::R6Class(
     },
 
     get_objects = function(ids) {
+      if (missing(ids)) {
+        return(private$storage())
+      }
+
       objects <- map(ids, function(id) {
         self$get_object(id)
       })
