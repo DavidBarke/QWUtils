@@ -399,8 +399,6 @@ DataSelector <- R6::R6Class(
         element(input, output, session, .data, .values, self, .envir)
       })
 
-      print(return_list)
-
       return(return_list)
     },
 

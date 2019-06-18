@@ -57,7 +57,9 @@ ObjectStorage <- R6::R6Class(
   classname = "ObjectStorage",
   public = list(
     initialize = function(allowed_classes = NULL) {
-      private$storage <- shiny::reactiveVal(list())
+      named_list <- list()
+      names(named_list) <- character()
+      private$storage <- shiny::reactiveVal(named_list)
 
       private$length <- shiny::reactive({
         length(private$storage())
@@ -97,22 +99,19 @@ ObjectStorage <- R6::R6Class(
         stopifnot(any(private$allowed_classes %in% class(object)))
       }
       storage <- private$storage()
-      storage[[object$get_id()]] <- object
+      storage[[as.character(length(storage) + 1)]] <- object
       private$storage(storage)
       invisible(self)
     },
 
-    get_length = function() {
-      length(private$storage())
+    get_ids = function() {
+      ids <- names(private$storage())
+      names(ids) <- private$storage_names()
+      ids
     },
 
-    # names of the ids are the current names
-    get_ids = function() {
-      ids <- map_chr(private$storage(), function(object) {
-        object$get_id()
-      })
-      names(ids) <- private$storage_names()
-      unlist(ids)
+    get_length = function() {
+      length(private$storage())
     },
 
     get_names = function() {
@@ -139,6 +138,15 @@ ObjectStorage <- R6::R6Class(
 
       objects
     },
+
+    # # names of the ids are the current names
+    # get_object_ids = function() {
+    #   ids <- map_chr(private$storage(), function(object) {
+    #     object$get_id()
+    #   })
+    #   names(ids) <- private$storage_names()
+    #   unlist(ids)
+    # },
 
     remove_object = function(id) {
       storage <- private$storage()

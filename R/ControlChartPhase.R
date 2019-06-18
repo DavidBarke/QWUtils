@@ -105,24 +105,30 @@ ControlChartPhase <- R6::R6Class(
     get_value = function() {
       sample_ids <- private$sample_storage$get_ids()
 
-      samples_nested <- purrr::map(sample_ids, function(id) {
-        private$sample_storage$get_object(id)$get_value
+      nested_samples <- purrr::map(sample_ids, function(id) {
+        private$sample_storage$get_object(id)$get_value()
       })
 
-      samples <- unlist(samples_nested)
+      # environment .envir has to have an variable with name index which helps
+      # generating increasing indices for the samples
+      sample_object_to_df <- function(sample_object, .envir) {
+        if (purrr::is_list(sample_object)) {
+          # Process lists of samples
+          purrr::map_dfr(sample_object, sample_object_to_df, .envir)
+        } else {
+          # At this point we only have vectors representing values of one sample
+          df <- tibble::tibble(
+            sample = .envir$index,
+            value = sample_object
+          )
+          .envir$index <- .envir$index + 1
+          df
+        }
+      }
 
-      print("SAMPLES")
-      print(samples)
-
-
-
-      # table <- purrr::map2_dfr(sample_ids, seq_along(sample_ids), function(id, index) {
-      #   value <- private$sample_storage$get_object(id)$get_value()
-      #   tibble::tibble(
-      #     sample = index,
-      #     value = private$sample_storage$get_object(id)$get_value()
-      #   )
-      # })
+      .envir <- new.env()
+      .envir$index <- 1
+      samples <- sample_object_to_df(nested_samples, .envir)
 
       if (length(samples) == 0) {
         table <- tibble::tibble(
@@ -130,12 +136,7 @@ ControlChartPhase <- R6::R6Class(
           value = numeric()
         )
       } else {
-        table <- purrr::map2_dfr(samples, seq_along(samples), function(id, index) {
-          tibble::tibble(
-            sample = index,
-            value = private$sample_storage$get_object(id)$get_value()
-          )
-        })
+        table <- samples
       }
 
       table
