@@ -19,8 +19,8 @@
 #'       control chart, otherwise not.
 #'     }
 #'   }
-#'   \item{\code{add_sample(sample)}}{Add a \code{\link{ControlChartSample}} to
-#'   the phase.
+#'   \item{\code{add_sample(sample)}}{Add a \code{\link{ControlChartSample}} or
+#'   \link{ControlChartSampleList} to the phase.
 #'     \tabular{ll}{
 #'       \code{sample} \tab A \code{\link{ControlChartSample}}.
 #'     }
@@ -77,13 +77,6 @@ ControlChartPhase <- R6::R6Class(
 
     add_sample = function(sample) {
       private$sample_storage$add_object(sample)
-      sample$set_name(paste0(
-        QWUtils::label_lang(
-          de = "Stichprobe ",
-          en = "Sample"
-        ),
-        private$sample_storage$get_length()
-      ))
     },
 
     get_id = function() {

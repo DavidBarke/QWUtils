@@ -26,8 +26,8 @@ form a \code{\link{ControlChart}}.
       control chart, otherwise not.
     }
   }
-  \item{\code{add_sample(sample)}}{Add a \code{\link{ControlChartSample}} to
-  the phase.
+  \item{\code{add_sample(sample)}}{Add a \code{\link{ControlChartSample}} or
+  \link{ControlChartSampleList} to the phase.
     \tabular{ll}{
       \code{sample} \tab A \code{\link{ControlChartSample}}.
     }

@@ -98,7 +98,7 @@ NULL
 
 #' @export
 FacDesign <- R6::R6Class(
-  classname = "FacDesignGenerator",
+  classname = "FacDesign",
   public = list(
     initialize = function(
       name, k, rep = 1, center = 0, fac_names = LETTERS[seq_len(k)],
@@ -138,6 +138,10 @@ FacDesign <- R6::R6Class(
       fac_design_table$response <- response
       private$fac_design_table(fac_design_table)
       private$.has_response(TRUE)
+    },
+
+    get_id = function() {
+      private$names$name()
     },
 
     get_name = function() {
@@ -204,6 +208,7 @@ FacDesign <- R6::R6Class(
     },
 
     rename_name = function(new_name) {
+      private$names$name(new_name)
       private$names$name(new_name)
     },
 

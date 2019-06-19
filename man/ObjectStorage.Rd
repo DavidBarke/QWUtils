@@ -47,7 +47,8 @@ storage$get_object(id)
     }
   }
   \item{\code{get_objects(ids)}}{Get a list of objects from the storage
-    with \code{object$get_id() \%in\% ids}.
+    with \code{object$get_id() \%in\% ids}. If \code{ids} is missing get
+    a list with all objects.
     \tabular{ll}{
       \code{ids} \tab Character vector. Each element has to be a id of
         an object in the storage.
