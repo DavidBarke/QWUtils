@@ -99,7 +99,7 @@ ObjectStorage <- R6::R6Class(
         stopifnot(any(private$allowed_classes %in% class(object)))
       }
       storage <- private$storage()
-      storage[[as.character(length(storage) + 1)]] <- object
+      storage[[object$get_id()]] <- object
       private$storage(storage)
       invisible(self)
     },
