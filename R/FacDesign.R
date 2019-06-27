@@ -112,12 +112,16 @@ FacDesign <- R6::R6Class(
       )
 
       fac_design_table <- tibble(
-        index = seq_len((2^k)*rep)
+        index = seq_len((2^k)*rep + center)
       )
 
       for (i in seq_len(k)) {
-        fac_design_table[[i + 1]] <- rep(
+        fac_permutation <- rep(
           rep(rep(c(1, -1), each = 2^(k - i)), times = 2^(i - 1)), times = rep
+        )
+        fac_design_table[[i + 1]] <- c(
+          fac_permutation,
+          rep(0, times = center)
         )
       }
 
@@ -148,13 +152,20 @@ FacDesign <- R6::R6Class(
       private$names$name()
     },
 
-    get_names = function() {
-      list(
-        fac = private$names$fac(),
-        index = private$names$index(),
-        name = private$names$name(),
-        response = private$names$response()
-      )
+    get_fac_design_name = function() {
+      private$names$name()
+    },
+
+    get_factor_names = function() {
+      private$names$fac()
+    },
+
+    get_index_name = function() {
+      private$names$index()
+    },
+
+    get_response_name = function() {
+      private$names$response()
     },
 
     get_table = function(
@@ -197,7 +208,7 @@ FacDesign <- R6::R6Class(
         stopifnot(all(old_names %in% private$names$fac()))
         fac_names <- private$names$fac()
         names(fac_names) <- fac_names
-        fac_names[new_names] <- new_names
+        fac_names[old_names] <- new_names
         names(fac_names) <- NULL
         private$names$fac(fac_names)
       }

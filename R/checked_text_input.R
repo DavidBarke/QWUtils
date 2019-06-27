@@ -166,7 +166,7 @@ checked_text_input <- function(
     updateTextInput(
       session = session,
       inputId = "name_text",
-      value = handle_fun(.value)
+      value = QWUtils::handle_fun(.value)
     )
   })
 
