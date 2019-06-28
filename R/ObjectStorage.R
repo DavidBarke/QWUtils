@@ -158,9 +158,9 @@ ObjectStorage <- R6::R6Class(
     },
 
     remove_objects = function(ids) {
-      walk(ids, function(id) {
-        self$remove_object(id)
-      })
+      storage <- private$storage()
+      storage[ids] <- NULL
+      private$storage(storage)
       invisible(self)
     }
   ),

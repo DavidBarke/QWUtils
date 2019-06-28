@@ -39,7 +39,7 @@ NULL
 ControlChartSample <- R6::R6Class(
   classname = "ControlChartSample",
   public = list(
-    initialize = function(value, name = character()) {
+    initialize = function(value, name = "") {
       if (!("counter" %in% names(self$static))) {
         self$static$counter <- 1
       } else {
