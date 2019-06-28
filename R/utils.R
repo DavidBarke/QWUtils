@@ -58,3 +58,27 @@ handle_fun <- function(x) {
     return(x)
   }
 }
+
+#' Guarantee that attribute has the same length as the object.
+#'
+#' @param x An \code{R} object.
+#' @param name The attribute's name.
+#' @param value A vector of the same length as x, or \code{NULL}.
+#'
+#' @export
+`length_attr<-` <- function(x, name, value) {
+  len <- length(x)
+
+  if (!(length(value) %in% c(1, len) || is.null(value))) {
+    stop(paste0("Value has to be NULL or of length 1 or length ", len, "."))
+  }
+
+  # "Recycling"
+  if (length(value) == 1) {
+    value <- rep(value, times = len)
+  }
+
+  attr(x, name) <- value
+
+  x
+}

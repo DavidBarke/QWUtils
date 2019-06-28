@@ -157,7 +157,7 @@ ObjectStorage <- R6::R6Class(
       invisible(self)
     },
 
-    remove_obects = function(ids) {
+    remove_objects = function(ids) {
       walk(ids, function(id) {
         self$remove_object(id)
       })
