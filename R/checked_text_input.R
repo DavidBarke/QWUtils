@@ -99,8 +99,8 @@ checked_text_input <- function(
 
     if (invalid_character()) {
       invalid_character <- QWUtils::label_lang(
-        de = "Name darf nur A-Z, a-z, 0-9 und '-' enthalten.",
-        en = "Name has to consist of A-Z, a-z, 0-9 and '-'"
+        de = "Name darf nur A-Z, a-z, 0-9, ' ' und '-' enthalten.",
+        en = "Name has to consist of A-Z, a-z, 0-9, ' ' and '-'"
       )
     } else {
       invalid_character <- NULL
