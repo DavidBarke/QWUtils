@@ -135,6 +135,10 @@ FacDesign <- R6::R6Class(
 
       private$.nrow <- reactiveVal(nrow(fac_design_table))
       private$fac_design_table <- reactiveVal(fac_design_table)
+
+      private$linear_model_storage <- ObjectStorage$new(
+        allowed_classes = "LinearModel"
+      )
     },
 
     add_response = function(response) {
@@ -144,8 +148,24 @@ FacDesign <- R6::R6Class(
       private$.has_response(TRUE)
     },
 
+    add_lm = function(linear_model) {
+      private$linear_model_storage$add_object(linear_model)
+    },
+
+    get_default_formula = function() {
+      paste0(private$names$response(), "~", private$names$fac()[1])
+    },
+
     get_id = function() {
       private$names$name()
+    },
+
+    get_lm = function(id) {
+      private$linear_model_storage$get_object(id)
+    },
+
+    get_lm_ids = function() {
+      private$linear_model_storage$get_ids()
     },
 
     get_name = function() {
@@ -197,6 +217,10 @@ FacDesign <- R6::R6Class(
       private$.nrow()
     },
 
+    remove_lm = function(id) {
+      private$linear_model_storage$remove_object(id)
+    },
+
     rename_fac_names = function(new_names, old_names = NULL) {
       if (is.null(old_names)) {
         stopifnot(
@@ -236,6 +260,7 @@ FacDesign <- R6::R6Class(
       name = NULL,
       response = NULL
     ),
-    .nrow = NULL
+    .nrow = NULL,
+    linear_model_storage = NULL
   )
 )
