@@ -8,7 +8,7 @@
 single_rename_ui(id)
 
 single_rename(input, output, session, .data, .values, .parent, .name,
-  .rename, .error_controller, .rename_tooltip)
+  .rename, .error_controller = NULL, .rename_tooltip = NULL)
 }
 \arguments{
 \item{id}{The module's id.}
