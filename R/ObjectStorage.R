@@ -105,7 +105,7 @@ ObjectStorage <- R6::R6Class(
     },
 
     get_ids = function() {
-      # These are the ids used by the ObjectStorage and NOT the stored objects
+      # The names of private$storage correspond to the ids of the stored objects
       ids <- names(private$storage())
       # These are the object names
       names(ids) <- private$storage_names()
