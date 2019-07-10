@@ -4,7 +4,7 @@
 \alias{find_code}
 \title{Find scripts containing specific code}
 \usage{
-find_code(directory, pattern, recursive = TRUE)
+find_code(directory, pattern, recursive = TRUE, count = FALSE)
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}
@@ -26,6 +26,11 @@ Match character, word, line and sentence boundaries with
 
 \item{recursive}{If \code{\link[base:logical]{TRUE}}, subdirectories are
 recursively searched for R scripts.}
+
+\item{count}{If \code{\link[base:logical]{TRUE}}, a vector with the number
+of occurences per script is returned. If \code{\link[base:logical]{FALSE}},
+a \code{\link[base:character]{character}} vector with the scripts containing
+at least one occurence is returned.}
 }
 \description{
 Find all the R scripts in a directory that contain some code as defined in

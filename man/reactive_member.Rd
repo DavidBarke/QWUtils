@@ -7,9 +7,10 @@
 reactive_member(value)
 }
 \arguments{
-\item{value}{If \code{\link[shiny:reactive]{reactive}}, this reactive is
-returned, else a \code{\link[shiny:reactiveVal]{reactiveVal}} with value as
-its initial value is returned.}
+\item{value}{If \code{\link[shiny:reactive]{reactive}} or function, this
+reactive or function is returned, else a
+\code{\link[shiny:reactiveVal]{reactiveVal}} with value as its initial value
+is returned.}
 }
 \description{
 Generate a \code{\link[R6:R6Class]{R6Class}}-member with reactive behaviour.

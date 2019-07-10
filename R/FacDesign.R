@@ -117,7 +117,7 @@ FacDesign <- R6::R6Class(
 
       for (i in seq_len(k)) {
         fac_permutation <- rep(
-          rep(rep(c(1, -1), each = 2^(k - i)), times = 2^(i - 1)), times = rep
+          rep(rep(c(-1, 1), each = 2^(k - i)), times = 2^(i - 1)), times = rep
         )
         fac_design_table[[i + 1]] <- c(
           fac_permutation,

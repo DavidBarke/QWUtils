@@ -6,9 +6,13 @@
 #'
 #' @inheritParams script_paths
 #' @inheritParams stringr::str_detect
+#' @param count If \code{\link[base:logical]{TRUE}}, a vector with the number
+#' of occurences per script is returned. If \code{\link[base:logical]{FALSE}},
+#' a \code{\link[base:character]{character}} vector with the scripts containing
+#' at least one occurence is returned.
 #'
 #' @export
-find_code <- function(directory, pattern, recursive = TRUE) {
+find_code <- function(directory, pattern, recursive = TRUE, count = FALSE) {
   scripts <- script_paths(directory, recursive = recursive)
 
   list_of_lines <- purrr::map(scripts, function(script) {
@@ -19,5 +23,17 @@ find_code <- function(directory, pattern, recursive = TRUE) {
     any(stringr::str_detect(lines, pattern = pattern))
   })
 
-  scripts[detected]
+  if (count) {
+    detected_lines <- list_of_lines[detected]
+    counts <- purrr::map_int(detected_lines, function(lines) {
+      count_occurences <- purrr::map_int(lines, function(line) {
+        stringr::str_count(line, pattern = pattern)
+      })
+      sum(count_occurences)
+    })
+    names(counts) <- scripts[detected]
+    return(counts)
+  } else {
+    return(scripts[detected])
+  }
 }
