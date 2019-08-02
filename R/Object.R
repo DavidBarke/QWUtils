@@ -25,7 +25,8 @@ Object <- R6::R6Class(
   public = list(
     initialize = function(name = "") {
       QWUtils::handle_static_counter(private$static)
-      private$id <- as.character(private$static$counter)
+      # prefix an underscore to get a valid column name for lm
+      private$id <- paste0("id_", as.character(private$static$counter))
 
       private$name <- QWUtils::reactive_member(name)
     },
