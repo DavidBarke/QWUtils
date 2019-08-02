@@ -101,11 +101,12 @@ FacDesign <- R6::R6Class(
   classname = "FacDesign",
   public = list(
     initialize = function(
-      name, k, rep = 1, center = 0, fac_names = LETTERS[seq_len(k)],
+      name, rep = 1, center = 0, factor_storage,
       response_name = "response", index_name = "index", response = NULL
     ) {
+      k <- factor_storage$get_length()
+
       private$names <- list(
-        fac = reactiveVal(fac_names),
         index = reactiveVal(index_name),
         name = reactiveVal(name),
         response = reactiveVal(response_name)
@@ -113,6 +114,11 @@ FacDesign <- R6::R6Class(
 
       fac_design_table <- tibble(
         index = seq_len((2^k)*rep + center)
+      )
+
+      private$factor_storage <- factor_storage
+      private$linear_model_storage <- ObjectStorage$new(
+        allowed_classes = "LinearModel"
       )
 
       for (i in seq_len(k)) {
@@ -135,10 +141,6 @@ FacDesign <- R6::R6Class(
 
       private$.nrow <- reactiveVal(nrow(fac_design_table))
       private$fac_design_table <- reactiveVal(fac_design_table)
-
-      private$linear_model_storage <- ObjectStorage$new(
-        allowed_classes = "LinearModel"
-      )
     },
 
     add_response = function(response) {
@@ -153,7 +155,10 @@ FacDesign <- R6::R6Class(
     },
 
     get_default_formula = function() {
-      paste0(private$names$response(), "~", private$names$fac()[1])
+      paste0(
+        private$names$response(), "~",
+        private$factor_storage$get_nth_object(1)$get_name()
+      )
     },
 
     get_id = function() {
@@ -176,8 +181,8 @@ FacDesign <- R6::R6Class(
       private$names$name()
     },
 
-    get_factor_names = function() {
-      private$names$fac()
+    get_factor_storage = function() {
+      private$factor_storage
     },
 
     get_index_name = function() {
@@ -194,14 +199,15 @@ FacDesign <- R6::R6Class(
     ) {
       fac_design_table <- private$fac_design_table()
       names(fac_design_table) <- c(
-        private$names$index(), private$names$fac(), private$names$response()
+        private$names$index(), private$factor_storage$get_ids(),
+        private$names$response()
       )
       return_names <- character()
       if (index) {
         return_names <- c(return_names, private$names$index())
       }
       if (factors) {
-        return_names <- c(return_names, private$names$fac())
+        return_names <- c(return_names, private$factor_storage$get_ids())
       }
       if (response) {
         return_names <- c(return_names, private$names$response())
@@ -224,17 +230,24 @@ FacDesign <- R6::R6Class(
     rename_fac_names = function(new_names, old_names = NULL) {
       if (is.null(old_names)) {
         stopifnot(
-          length(new_names) == length(private$names$fac()),
+          length(new_names) == private$factor_storage$get_length(),
           length(unique(new_names)) == length(new_names)
         )
-        private$names$fac(new_names)
+        purrr::walk2(
+          private$factor_storage$get_objects(),
+          new_names,
+          function(factor, name) {
+            factor$set_name(name)
+          }
+        )
       } else {
-        stopifnot(all(old_names %in% private$names$fac()))
-        fac_names <- private$names$fac()
-        names(fac_names) <- fac_names
-        fac_names[old_names] <- new_names
-        names(fac_names) <- NULL
-        private$names$fac(fac_names)
+        # REWRITE FOR FACTOR_STORAGE
+        # stopifnot(all(old_names %in% private$names$fac()))
+        # fac_names <- private$names$fac()
+        # names(fac_names) <- fac_names
+        # fac_names[old_names] <- new_names
+        # names(fac_names) <- NULL
+        # private$names$fac(fac_names)
       }
     },
 
@@ -253,9 +266,9 @@ FacDesign <- R6::R6Class(
   ),
   private = list(
     fac_design_table = NULL,
+    factor_storage = NULL,
     .has_response = NULL,
     names = list(
-      fac = NULL,
       index = NULL,
       name = NULL,
       response = NULL

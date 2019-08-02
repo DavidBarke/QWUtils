@@ -36,9 +36,13 @@ storage$get_object(id)
   \item{\code{get_ids()}}{Get the ids of the stored objects as a character
     vector named with the object's names.
   }
-  \item{\code{get_length()}}{Get the length of the storage.}
-  \item{\code{get_names()}}{Get the objects' names which aren't necessarily
-    unique.
+  \item{\code{get_length()}}{Get the length of the storage.
+  }
+  \item{\code{get_names()}}{Get the objects' names, which aren't necessarily
+    unique. See also \code{this$get_ids()}.
+  }
+  \item{\code{get_nth_object(n)}}{Get the object with index \code{n} going
+  from \code{1} to \code{this$get_length()}.
   }
   \item{\code{get_object(id)}}{Get an object from the storage
     with \code{object$get_id() == id}.
