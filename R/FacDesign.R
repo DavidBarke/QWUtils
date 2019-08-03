@@ -173,6 +173,10 @@ FacDesign <- R6::R6Class(
       private$linear_model_storage$get_ids()
     },
 
+    get_lm_storage = function() {
+      private$linear_model_storage
+    },
+
     get_name = function() {
       private$names$name()
     },
