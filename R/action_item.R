@@ -132,6 +132,8 @@ multiple_actionItem <- function(inputId_list, label_list) {
 #' This function is used internal in \code{\link{
 #' multiple_actionItem}}. It could be used manually as the \code{...} argument
 #' to \code{\link{actionItem}}.
+#'
+#' @export
 multiple_actionSubItem <- function(inputId_list, label_list) {
   ui <- purrr::pmap(
     .l = list(
