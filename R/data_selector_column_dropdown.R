@@ -59,7 +59,7 @@ data_selector_column_dropdown_ui <- function(id) {
 #'
 #' @export
 data_selector_column_dropdown <- function(
-  input, output, session, .data, .values, .parent, group_name, dataset_name,
+  input, output, session, .values, .parent, group_name, dataset_name,
   column_name
 ) {
 
@@ -90,7 +90,7 @@ data_selector_column_dropdown <- function(
 
     output[["column_datatable" %_% counter]] <- renderDataTable({
       isolate({
-        datatable(.data$get_column_value(
+        datatable(.values$data$get_column_value(
           group_name = group_name(),
           dataset_name = dataset_name(),
           column_name = column_name(),
@@ -139,7 +139,7 @@ data_selector_column_dropdown <- function(
   })
 
   observeEvent(input$confirm_rename_column, {
-    .data$rename_columns(
+    .values$data$rename_columns(
       group_name = group_name(),
       dataset_name = dataset_name(),
       new_column_names = new_column_name_return$name(),
@@ -172,7 +172,7 @@ data_selector_column_dropdown <- function(
   })
 
   observeEvent(input$confirm_remove_column, {
-    .data$remove_columns(group_name(), dataset_name(), column_name())
+    .values$data$remove_columns(group_name(), dataset_name(), column_name())
     removeModal()
   })
 
@@ -208,7 +208,7 @@ data_selector_column_dropdown <- function(
               de = "Zu testende Klasse",
               en = "Class to get tested"
             ),
-            choices = names(.data$get_column_class(
+            choices = names(.values$data$get_column_class(
               group_name = group_name,
               dataset_name = dataset_name,
               column_name = column_name,
@@ -230,7 +230,7 @@ data_selector_column_dropdown <- function(
       output[[
         "class" %_% group_name %_% dataset_name %_% column_name
       ]] <- renderDT({
-        column_class <- .data$get_column_class(
+        column_class <- .values$data$get_column_class(
           group_name = group_name,
           dataset_name = dataset_name,
           column_name = column_name,
@@ -252,7 +252,7 @@ data_selector_column_dropdown <- function(
 
       observeEvent(
         input[["test_class" %_% group_name %_% dataset_name %_% column_name]], {
-          .data$column_class_allowed(
+          .values$data$column_class_allowed(
             group_name = group_name,
             dataset_name = dataset_name,
             column_name = column_name,
@@ -267,7 +267,6 @@ data_selector_column_dropdown <- function(
   new_column_name_return <- callModule(
     module = QWUtils::checked_text_input,
     id = "id_new_column_name",
-    .data = .data,
     .values = .values,
     .parent = self,
     .label = label_lang(

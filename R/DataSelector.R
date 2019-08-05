@@ -34,7 +34,6 @@
 #'   label = "Select column 2",
 #'   setdiff_id = "column_1"
 #' )$callModule(
-#'   .data = data,
 #'   .values = values,
 #'   .parent = parent
 #' )
@@ -47,11 +46,10 @@
 #'       \code{id} \tab The id of the data_selector.
 #'     }
 #'   }
-#'   \item{\code{callModule(.data, .values, .parent)}}{Activate the data_selector
+#'   \item{\code{callModule(.values, .parent)}}{Activate the data_selector
 #'     inside the server function. Before calling this function NO ui will be
 #'     displayed.
 #'     \tabular{ll}{
-#'       \code{.data} \tab \code{\link{DataStorage}}. \cr
 #'       \code{.values} \tab List of \code{\link[shiny:reactive]{reactive}}-like objects
 #'       as specified by XXX. \cr
 #'       \code{.parent} \tab \code{\link{Node}}.
@@ -125,11 +123,10 @@ DataSelector <- R6::R6Class(
       private$id <- id
     },
 
-    callModule = function(.data, .values, .parent) {
+    callModule = function(.values, .parent) {
       callModule(
         module = private$data_selector_module,
         id = private$id,
-        .data = .data,
         .values = .values,
         .parent = .parent
       )
@@ -140,7 +137,7 @@ DataSelector <- R6::R6Class(
       multiple = FALSE
     ) {
       private$elements_reactive_list[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         assign(
           id %_% "column_name",
@@ -163,7 +160,7 @@ DataSelector <- R6::R6Class(
             for (sd_id in setdiff_id) {
               if (input[[sd_id %_% "select_column"]] ==
                   input[[id %_% "select_column"]]) {
-                choices <- .data$get_column_names(
+                choices <- .values$data$get_column_names(
                   group_name <- get(
                     group_id %_% "group_name", envir = .envir
                   )(),
@@ -198,7 +195,7 @@ DataSelector <- R6::R6Class(
       }
 
       private$elements_server[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         ns <- session$ns
 
@@ -216,7 +213,6 @@ DataSelector <- R6::R6Class(
             callModule(
               module = data_selector_column_dropdown,
               id = id %_% "column_dropdown",
-              .data = .data,
               .values = .values,
               .parent = .parent,
               group_name = get(group_id %_% "group_name", envir = .envir),
@@ -227,7 +223,7 @@ DataSelector <- R6::R6Class(
         }
 
         output[[id %_% "ui"]] <- renderUI({
-          choices <- .data$get_column_names(
+          choices <- .values$data$get_column_names(
             group_name = get(group_id %_% "group_name", envir = .envir)(),
             dataset_name = get(dataset_id %_% "dataset_name", envir = .envir)()
           )
@@ -259,7 +255,7 @@ DataSelector <- R6::R6Class(
 
     Dataset = function(id, group_id, label, extended = TRUE) {
       private$elements_reactive_list[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         assign(
           id %_% "dataset_name",
@@ -271,7 +267,7 @@ DataSelector <- R6::R6Class(
       }
 
       private$elements_server[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         ns <- session$ns
 
@@ -289,7 +285,6 @@ DataSelector <- R6::R6Class(
             callModule(
               module = data_selector_dataset_dropdown,
               id = id %_% "dataset_dropdown",
-              .data = .data,
               .values = .values,
               .parent = .parent,
               group_name = get(group_id %_% "group_name", envir = .envir),
@@ -302,7 +297,7 @@ DataSelector <- R6::R6Class(
           selectInput(
             inputId = ns(id %_% "select_dataset"),
             label = label,
-            choices = .data$get_dataset_names(
+            choices = .values$data$get_dataset_names(
               group_name = get(group_id %_% "group_name", envir = .envir)()
             )
           )
@@ -320,7 +315,7 @@ DataSelector <- R6::R6Class(
 
     Group = function(id, label, extended = TRUE) {
       private$elements_reactive_list[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         assign(
           id %_% "group_name",
@@ -332,7 +327,7 @@ DataSelector <- R6::R6Class(
       }
 
       private$elements_server[[id]] <- function(
-        input, output, session, .data, .values, .parent, .envir
+        input, output, session, .values, .parent, .envir
       ) {
         ns <- session$ns
 
@@ -350,7 +345,6 @@ DataSelector <- R6::R6Class(
             callModule(
               module = data_selector_group_dropdown,
               id = id %_% "group_dropdown",
-              .data = .data,
               .values = .values,
               .parent = .parent,
               group_name = get(id %_% "group_name", envir = .envir)
@@ -362,7 +356,7 @@ DataSelector <- R6::R6Class(
           selectInput(
             inputId = ns(id %_% "select_group"),
             label = label,
-            choices = .data$get_group_names()
+            choices = .values$data$get_group_names()
           )
         })
 
@@ -378,7 +372,7 @@ DataSelector <- R6::R6Class(
   ),
   private = list(
     data_selector_module = function(
-      input, output, session, .data, .values, .parent
+      input, output, session, .values, .parent
     ) {
 
       ns <- session$ns
@@ -392,11 +386,11 @@ DataSelector <- R6::R6Class(
       start_index <- 1
 
       map(private$elements_reactive_list, function(element) {
-        element(input, output, session, .data, .values, self, .envir)
+        element(input, output, session, .values, self, .envir)
       })
 
       return_list <- map(private$elements_server, function(element) {
-        element(input, output, session, .data, .values, self, .envir)
+        element(input, output, session, .values, self, .envir)
       })
 
       return(return_list)

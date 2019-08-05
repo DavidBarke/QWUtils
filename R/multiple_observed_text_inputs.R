@@ -9,7 +9,7 @@ multiple_observed_text_inputs_ui <- function(id) {
 
 #' @export
 multiple_observed_text_inputs <- function(
-  input, output, session, .data, .values, .parent, initial_values,
+  input, output, session, .values, .parent, initial_values,
   allow_reset = FALSE, .reset = NULL, .update_values = NULL
 ) {
 
@@ -33,7 +33,6 @@ multiple_observed_text_inputs <- function(
           rvs$observed_text_input_return_list[[index]] <- callModule(
             module = QWUtils::checked_text_input,
             id = "id_observed_text_input" %_% index,
-            .data = .data,
             .values = .values,
             .parent = self,
             .reset = if (allow_reset) reactive({rvs$reset_all}) else NULL,

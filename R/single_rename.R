@@ -24,7 +24,7 @@ single_rename_ui <- function(id) {
 #'
 #' @export
 single_rename <- function(
-  input, output, session, .data, .values, .parent, .name, .rename,
+  input, output, session, .values, .parent, .name, .rename,
   .error_controller = NULL, .rename_tooltip = NULL
 ) {
 
@@ -88,7 +88,6 @@ single_rename <- function(
   checked_text_input_return <- shiny::callModule(
     module = QWUtils::checked_text_input,
     id = "id_checked_text_input",
-    .data = .data,
     .values = .values,
     .parent = self,
     .value = .name,

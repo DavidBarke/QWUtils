@@ -11,7 +11,7 @@
 #'
 #' @export
 observed_vector_input <- function(
-  input, output, session, .data, .values, .parent, .label = NULL,
+  input, output, session, .values, .parent, .label = NULL,
   .value = "", .error_controller_text = NULL,
   .error_controller_value = NULL
 ) {

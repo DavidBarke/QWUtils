@@ -65,7 +65,7 @@ data_selector_dataset_dropdown_ui <- function(id) {
 #'
 #' @export
 data_selector_dataset_dropdown <- function(
-  input, output, session, .data, .values, .parent, group_name, dataset_name
+  input, output, session, .values, .parent, group_name, dataset_name
 ) {
 
   ns <- session$ns
@@ -111,7 +111,7 @@ data_selector_dataset_dropdown <- function(
     output[["open_dataset" %_% open_dataset_counter]] <- renderDataTable({
       # Verweis auf selected_group und selected_dataset anstelle der Inputs, um
       # die Reaktivität aufzulösen
-      datatable(.data$get_dataset_value(selected_group, selected_dataset))
+      datatable(.values$data$get_dataset_value(selected_group, selected_dataset))
     })
 
     root_filepath <- selected_group %_% selected_dataset %_% Sys.Date()
@@ -121,7 +121,7 @@ data_selector_dataset_dropdown <- function(
         paste0(root_filepath, ".csv")
       },
       content = function(file) {
-        write_csv(.data$get_dataset_value(selected_group, selected_dataset), file)
+        write_csv(.values$data$get_dataset_value(selected_group, selected_dataset), file)
       },
       contentType = "text/csv"
     )
@@ -132,7 +132,7 @@ data_selector_dataset_dropdown <- function(
       },
       content = function(file) {
         write_excel_csv(
-          .data$get_dataset_value(selected_group, selected_dataset),
+          .values$data$get_dataset_value(selected_group, selected_dataset),
           file
         )
       },
@@ -159,12 +159,12 @@ data_selector_dataset_dropdown <- function(
       dataset_name <- dataset_name()
 
       output[[group_name %_% dataset_name %_% "dataset_information"]] <- renderUI({
-        column_names <- .data$get_column_names(
+        column_names <- .values$data$get_column_names(
           group_name = group_name,
           dataset_name = dataset_name
         )
 
-        classes <- .data$get_dataset_class(
+        classes <- .values$data$get_dataset_class(
           group_name = group_name,
           dataset_name = dataset_name
         )
@@ -225,7 +225,7 @@ data_selector_dataset_dropdown <- function(
   })
 
   observeEvent(input$confirm_new_dataset_name, {
-    .data$rename_dataset(
+    .values$data$rename_dataset(
       group_name(),
       dataset_name(),
       input$new_dataset_name
@@ -269,7 +269,7 @@ data_selector_dataset_dropdown <- function(
   })
 
   observeEvent(input$confirm_remove_dataset, {
-    .data$remove_dataset(
+    .values$data$remove_dataset(
       group_name(),
       dataset_name()
     )

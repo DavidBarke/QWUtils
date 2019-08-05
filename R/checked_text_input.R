@@ -4,7 +4,6 @@
 #' textInput whose value is checked for being useable as an object name
 #'
 #' @param input,output,session Called by \code{\link[shiny]{callModule}}.
-#' @param .data The \code{.data} object.
 #' @param .values The \code{.values} list.
 #' @param .parent The parent \code{\link{Node}} object.
 #' @param .label The contents of the button or link-usually a text label, but
@@ -39,7 +38,7 @@
 #'
 #' @export
 checked_text_input <- function(
-  input, output, session, .data, .values, .parent, .label = NULL, .value = "",
+  input, output, session, .values, .parent, .label = NULL, .value = "",
   .allow_reset = TRUE, .reset = NULL, .update_value = NULL,
   .error_controller = NULL, .inline_block = FALSE
 ) {
@@ -145,7 +144,7 @@ checked_text_input <- function(
     if (!name_is_null()) {
       !all(
         stringr::str_split(input$name_text, "")[[1]] %in%
-          .data$valid_name_characters
+          .values$data$valid_name_characters
       )
     } else {
       FALSE

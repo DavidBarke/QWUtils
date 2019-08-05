@@ -56,7 +56,7 @@ data_selector_group_dropdown_ui <- function(id) {
 #'
 #' @export
 data_selector_group_dropdown <- function(
-  input, output, session, .data, .values, .parent, group_name
+  input, output, session, .values, .parent, group_name
 ) {
 
   ns <- session$ns
@@ -84,7 +84,7 @@ data_selector_group_dropdown <- function(
     if (!(group_name() %_% "group_information") %in% names(output)) {
       group_name <- group_name()
       output[[group_name %_% "group_information"]] <- renderText({
-        n_datasets <- length(.data$get_dataset_names(group_name))
+        n_datasets <- length(.values$data$get_dataset_names(group_name))
 
         label_lang(
           de = paste0("Anzahl Datensaetze: ", n_datasets),
@@ -131,7 +131,7 @@ data_selector_group_dropdown <- function(
   })
 
   observeEvent(input$confirm_new_group_name, {
-    .data$rename_group(group_name(), input$new_group_name)
+    .values$data$rename_group(group_name(), input$new_group_name)
     rvs$new_group_name <- input$new_group_name
     removeModal()
   })
@@ -176,7 +176,7 @@ data_selector_group_dropdown <- function(
   })
 
   observeEvent(input$confirm_copy_group, {
-    .data$copy_group(group_name(), input$copy_group_name)
+    .values$data$copy_group(group_name(), input$copy_group_name)
     removeModal()
   })
 
@@ -210,7 +210,7 @@ data_selector_group_dropdown <- function(
   })
 
   observeEvent(input$confirm_remove_group, {
-    .data$remove_group(group_name())
+    .values$data$remove_group(group_name())
     removeModal()
   })
 

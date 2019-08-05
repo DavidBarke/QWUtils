@@ -30,7 +30,7 @@ significance_input_ui <- function(id) {
 #'
 #' @export
 significance_input <- function(
-  input, output, session, .data, .values, .parent
+  input, output, session, .values, .parent
 ) {
 
   ns <- session$ns
