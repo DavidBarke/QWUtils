@@ -7,15 +7,13 @@
 \usage{
 data_selector_column_dropdown_ui(id)
 
-data_selector_column_dropdown(input, output, session, .data, .values,
-  .parent, group_name, dataset_name, column_name)
+data_selector_column_dropdown(input, output, session, .values, .parent,
+  group_name, dataset_name, column_name)
 }
 \arguments{
 \item{id}{The module's id}
 
 \item{input, output, session}{Called by \code{\link[shiny:callModule]{callModule}}.}
-
-\item{.data}{The \code{.data} object.}
 
 \item{.values}{The \code{.values} list.}
 

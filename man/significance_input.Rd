@@ -7,14 +7,12 @@
 \usage{
 significance_input_ui(id)
 
-significance_input(input, output, session, .data, .values, .parent)
+significance_input(input, output, session, .values, .parent)
 }
 \arguments{
 \item{id}{The module's id.}
 
 \item{input, output, session}{Called by \code{\link[shiny:callModule]{callModule}}.}
-
-\item{.data}{The \code{.data} object.}
 
 \item{.values}{The \code{.values} list.}
 

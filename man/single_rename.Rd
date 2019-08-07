@@ -7,15 +7,13 @@
 \usage{
 single_rename_ui(id)
 
-single_rename(input, output, session, .data, .values, .parent, .name,
-  .rename, .error_controller = NULL, .rename_tooltip = NULL)
+single_rename(input, output, session, .values, .parent, .name, .rename,
+  .error_controller = NULL, .rename_tooltip = NULL)
 }
 \arguments{
 \item{id}{The module's id.}
 
 \item{input, output, session}{Called by \code{\link[shiny:callModule]{callModule}}.}
-
-\item{.data}{The \code{.data} object.}
 
 \item{.values}{The \code{.values} list.}
 

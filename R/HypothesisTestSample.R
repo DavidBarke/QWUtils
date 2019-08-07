@@ -18,15 +18,15 @@
 #'       sample's value.
 #'     }
 #'   }
-#'   \item{get_id()}{Get the sample's id.
+#'   \item{\code{get_id()}}{Get the sample's id.
 #'   }
-#'   \item{get_name()}{Get the sample's name.
+#'   \item{\code{get_name()}}{Get the sample's name.
 #'   }
-#'   \item{get_value()}{Get the sample's value.
+#'   \item{\code{get_value()}}{Get the sample's value.
 #'   }
-#'   \item{set_name(name)}{Set the sample's name with \code{name}.
+#'   \item{\code{set_name(name)}}{Set the sample's name with \code{name}.
 #'   }
-#'   \item{set_value(value)}{Set the sample's value with \code{value}.
+#'   \item{\code{set_value(value)}}{Set the sample's value with \code{value}.
 #'   }
 #' }
 #'

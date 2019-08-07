@@ -82,3 +82,26 @@ handle_fun <- function(x) {
 
   x
 }
+
+#' Convert string to numeric
+#'
+#' Convert a string consisting of numbers seperated by \code{,} to a numeric vector.
+#'
+#' @param x Character.
+#'
+#' @export
+vector_text_to_numeric <- function(x) {
+  as.numeric(unlist(str_split(x, ",")))
+}
+
+#' Convert numeric to string
+#'
+#' Convert a numeric vector to a string in which each number is seperated by
+#' \code{,}.
+#'
+#' @param x Numeric vector.
+#'
+#' @export
+numeric_to_vector_text <- function(x) {
+  paste(x, collapse = ", ")
+}

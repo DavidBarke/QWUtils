@@ -44,7 +44,6 @@ element.
   label = "Select column 2",
   setdiff_id = "column_1"
 )$callModule(
-  .data = data,
   .values = values,
   .parent = parent
 )
@@ -59,11 +58,10 @@ element.
       \code{id} \tab The id of the data_selector.
     }
   }
-  \item{\code{callModule(.data, .values, .parent)}}{Activate the data_selector
+  \item{\code{callModule(.values, .parent)}}{Activate the data_selector
     inside the server function. Before calling this function NO ui will be
     displayed.
     \tabular{ll}{
-      \code{.data} \tab \code{\link{DataStorage}}. \cr
       \code{.values} \tab List of \code{\link[shiny:reactive]{reactive}}-like objects
       as specified by XXX. \cr
       \code{.parent} \tab \code{\link{Node}}.

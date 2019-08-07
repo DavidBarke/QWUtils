@@ -20,10 +20,6 @@ observed_vector_input <- function(
 
   self <- QWUtils::Node$new(ns("observed_vector_input"), .parent, session)
 
-  vector_text_to_numeric <- function(x) {
-    as.numeric(unlist(str_split(x, ",")))
-  }
-
   output$text_input <- shiny::renderUI({
 
     shiny::textInput(

@@ -5,7 +5,7 @@
 \alias{observed_vector_input_ui}
 \title{Observed vector input}
 \usage{
-observed_vector_input(input, output, session, .data, .values, .parent,
+observed_vector_input(input, output, session, .values, .parent,
   .label = NULL, .value = "", .error_controller_text = NULL,
   .error_controller_value = NULL)
 
@@ -13,8 +13,6 @@ observed_vector_input_ui(id)
 }
 \arguments{
 \item{input, output, session}{Called by \code{\link[shiny:callModule]{callModule}}.}
-
-\item{.data}{The \code{.data} object.}
 
 \item{.values}{The \code{.values} list.}
 

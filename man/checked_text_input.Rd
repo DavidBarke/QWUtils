@@ -5,7 +5,7 @@
 \alias{checked_text_input_ui}
 \title{Checked text input}
 \usage{
-checked_text_input(input, output, session, .data, .values, .parent,
+checked_text_input(input, output, session, .values, .parent,
   .label = NULL, .value = "", .allow_reset = TRUE, .reset = NULL,
   .update_value = NULL, .error_controller = NULL,
   .inline_block = FALSE)
@@ -14,8 +14,6 @@ checked_text_input_ui(id)
 }
 \arguments{
 \item{input, output, session}{Called by \code{\link[shiny]{callModule}}.}
-
-\item{.data}{The \code{.data} object.}
 
 \item{.values}{The \code{.values} list.}
 
