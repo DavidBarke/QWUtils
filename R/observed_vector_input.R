@@ -82,7 +82,7 @@ observed_vector_input <- function(
       input$vector_text,
       # Matches positive and negative numbers separated by comma and an
       # arbitrary number of whitespaces
-      "^([-]?[0-9]+[\\.]?[0-9]*[,]{1}[\\s]+)*([-]?[0-9]+[\\.]?[0-9]*[\\s]*){1}$"
+      "^([-]?[0-9]+[\\.]?[0-9]*[,]{1}[\\s]*)*([-]?[0-9]+[\\.]?[0-9]*[\\s]*){1}$"
     )) {
       wrong_char <- TRUE
     } else {

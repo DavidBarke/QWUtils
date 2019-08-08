@@ -1,130 +1,103 @@
 #' Hypothesis Test
-#' 
+#'
 #' \code{\link[R6:R6Class]{R6Class}} representing a hypothesis test consisting
 #' of \code{\link{HypothesisTestSample}}s and \code{\link{NullHypothesis}}.
-#' 
+#'
 #' @section Usage:
 #' \preformatted{hypothesis_test = HypothesisTest$new()
-#' 
+#'
 #' hypothesis_test$add_sample(HypothesisTestSample$new())
-#' 
+#'
 #' hypothesis_test$add_null_hypothesis(NullHypothesis$new())
 #' }
-#' 
+#'
 #' @section Methods:
 #' \describe{
 #'   \item{\code{new()}}{Initialize the hypothesis test.
 #'   }
-#'   \item{\code{add_null_hypothesis(null_hypothesis)}}{Add a 
-#'   \code{\link{NullHypothesis}} to the hypothesis test.
-#'     \tabular{ll}{
-#'       \code{hypothesis_test} \tab A \code{\link{NullHypothesis}} object.
-#'     }
+#'   \item{\code{get_null_hypothesis_storage()}{Get the hypothesis test's
+#'     null hypothesis storage, which is an \code{\link{ObjectStorage}} object.
 #'   }
-#'   \item{\code{add_sample(sample)}}{Add a \code{\link{HypothesisTestSample}} 
-#'   to the hypothesis test.
-#'     \tabular{ll}{
-#'       \code{sample} \tab A \code{\link{HypothesisTestSample}} object.
-#'     }
-#'   }
-#'   \item{\code{get_null_hypothesis(id)}}{Get the hypothesis test's null
-#'   hypothesis with \code{id == id}.
-#'   }
-#'   \item{\code{get_null_hypothesis_ids()}}{Get all null hypothesis ids as a
-#'   \code{\link[base:character]{character}} vector.
-#'   }
-#'   \item{\code{get_sample(id)}}{Get the hypothesis tests's sample with
-#'   \code{id == id}.
-#'   }
-#'   \item{\code{get_sample_ids()}}{Get all sample ids as a 
-#'   \code{\link[base:character]{character}} vector.
+#'   \item{\code{get_sample_storage()}{Get the hypothesis test's sample storage,
+#'     which is an \code{\link{ObjectStorage}} object.
 #'   }
 #'   \item{\code{get_id()}}{Get the hypothesis test's id.
 #'   }
 #'   \item{\code{get_name()}}{Get the hypothesis test's name.
 #'   }
-#'   \item{\code{remove_null_hypothesis(id)}}{Remove the null hypothesis with
-#'   \code{id == id}.
-#'   }
-#'   \item{\code{remove_sample(id)}}{Remove the sample with \code{id == id}.
-#'   }
 #'   \item{\code{set_name(name)}}{Set the hypothesis test's name.
 #'   }
 #' }
-#' 
+#'
 #' @name HypothesisTest
 NULL
 
 #' @export
 HypothesisTest <- R6::R6Class(
   classname = "HypothesisTest",
+  inherit = QWUtils::Object,
   public = list(
     initialize = function() {
-      if (!("counter" %in% names(self$static))) {
-        self$static$counter <- 1
-      } else {
-        self$static$counter <- self$static$counter + 1
-      }
-      private$id <- as.character(self$static$counter)
-      
+      super$initialize()
+
       private$sample_storage <- QWUtils::ObjectStorage$new(
         allowed_classes = "HypothesisTestSample"
       )
-      
+
       private$null_hypothesis_storage <- QWUtils::ObjectStorage$new(
         allowed_classes = "NullHypothesis"
       )
     },
-    
+
     static = new.env(),
-    
-    add_null_hypothesis = function(null_hypothesis) {
-      private$null_hypothesis_storage$add_object(null_hypothesis)
+
+    get_test_related = function(
+      what = c("x", "y", "alternative", "mu", "paired", "var.equal", "conf.level")
+    ) {
+      what <- match.arg(what)
+
+      QWUtils::handle_fun(private[[what]])
     },
-    
-    add_sample = function(sample) {
-      private$sample_storage$add_object(sample)
+
+    get_null_hypothesis_storage = function() {
+      private$null_hypothesis_storage
     },
-    
-    get_null_hypothesis = function(id) {
-      private$null_hypothesis_storage$get_object(id)
+
+    get_sample_storage = function() {
+      private$sample_storage
     },
-    
-    get_null_hypothesis_ids = function() {
-      private$null_hypothesis_storage$get_ids()
+
+    get_test_output = function() {
+      t.test(
+        x = QWUtils::handle_fun(private$x),
+        y = QWUtils::handle_fun(private$y),
+        alternative = QWUtils::handle_fun(private$alternative),
+        mu = QWUtils::handle_fun(private$mu),
+        paired = QWUtils::handle_fun(private$paired),
+        var.equal = QWUtils::handle_fun(private$var.equal),
+        conf.level = QWUtils::handle_fun(private$conf.level)
+      )
     },
-    
-    get_sample = function(id) {
-      private$sample_storage$get_object(id)
-    },
-    
-    get_sample_ids = function() {
-      private$sample_storage$get_ids()
-    },
-    
-    get_id = function() {
-      private$id
-    },
-    
-    get_name = function() {
-      private$id
-    },
-    
-    remove_null_hypothesis = function(id) {
-      private$null_hypothesis_storage$remove_object(id)
-    },
-    
-    remove_sample = function(id) {
-      private$sample_storage$remove_object(id)
-    },
-    
-    set_name = function(name) {
-      private$name(name)
+
+    set_test_related = function(
+      what = c("x", "y", "alternative", "mu", "paired", "var.equal", "conf.level"),
+      value
+    ) {
+      what <- match.arg(what)
+
+      private[[what]] <- QWUtils::reactive_member(value)
     }
   ),
   private = list(
+    alternative = NULL,
+    conf.level = NULL,
     id = character(),
+    mu = NULL,
+    paired = NULL,
     null_hypothesis_storage = NULL,
-    sample_storage = NULL
+    sample_storage = NULL,
+    var.equal = NULL,
+    x = NULL,
+    y = NULL
   )
 )
