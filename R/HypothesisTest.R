@@ -51,20 +51,38 @@ HypothesisTest <- R6::R6Class(
 
     static = new.env(),
 
-    get_test_related = function(
-      what = c("x", "y", "alternative", "mu", "paired", "var.equal", "conf.level")
-    ) {
-      what <- match.arg(what)
-
-      QWUtils::handle_fun(private[[what]])
-    },
-
     get_null_hypothesis_storage = function() {
       private$null_hypothesis_storage
     },
 
     get_sample_storage = function() {
       private$sample_storage
+    },
+
+    get_test_datatable = function() {
+      test_output <- self$get_test_output()
+
+      test_df <- tibble(
+        param = QWUtils::label_lang(
+          de = c("Teststatistik", "Freiheitsgrade", "p-Wert", "Konfidenzintervall"),
+          en = c("Test statistic", "Degrees of freedom", "p value", "Confidence interval")
+        ),
+        value = c(
+          test_output$statistic, test_output$parameter, test_output$p.value,
+          paste0(
+            "[",
+            paste(format(test_output$conf.int, digits = 8), collapse = ", "),
+            "]"
+          )
+        )
+      )
+
+      names(test_df) <- QWUtils::label_lang(
+        de = c("Parameter", "Wert"),
+        en = c("Parameter", "Value")
+      )
+
+      DT::datatable(test_df)
     },
 
     get_test_output = function() {
@@ -77,6 +95,14 @@ HypothesisTest <- R6::R6Class(
         var.equal = QWUtils::handle_fun(private$var.equal),
         conf.level = QWUtils::handle_fun(private$conf.level)
       )
+    },
+
+    get_test_related = function(
+      what = c("x", "y", "alternative", "mu", "paired", "var.equal", "conf.level")
+    ) {
+      what <- match.arg(what)
+
+      private[[what]]
     },
 
     set_test_related = function(

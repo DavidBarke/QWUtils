@@ -82,15 +82,24 @@ ErrorControllerList <- R6::R6Class(
     },
 
     has_error = function() {
-      any(purrr::map_lgl(private$storage(), function(error_controller) {
-        error_controller$has_error()
-      }))
+      if (length(private$storage()) == 0) {
+        error <- FALSE
+      } else {
+        print("ELSE HAS ERROR")
+        error <- any(purrr::map_lgl(private$storage(), function(error_controller) {
+          error_controller$has_error()
+        }))
+      }
+
+      error
     },
 
     set_value = function(value) {
       purrr::walk(private$storage(), function(error_controller) {
         error_controller$set_value(value)
       })
+
+      self
     }
   ),
   private = list(
