@@ -6,7 +6,7 @@
 \description{
 Reactive R6Class that returns HTML according to a test function. Modules like
 \code{\link{checked_text_input}} or \code{\link{observed_vector_input}}
-provide a argument accepting an ErrorController or \code{\link{ErrorControllerList}}
+provide an argument accepting an ErrorController or \code{\link{ErrorControllerList}}
 that expands the module's default tests.
 }
 \section{Usage}{
