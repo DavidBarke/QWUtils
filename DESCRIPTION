@@ -16,3 +16,7 @@ Imports:
     shinyBS,
     R.utils,
     purrr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

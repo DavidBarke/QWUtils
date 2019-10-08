@@ -20,7 +20,7 @@
 #' @export
 actionButtonQW <- function(
   inputId, label, icon = NULL, style = "material-flat", color = "default",
-  size = "xs", block = FALSE, no_outline = TRUE, tooltip = NULL,
+  size = "xs", block = FALSE, no_outline = TRUE, tooltip = NULL, ...,
   dropdown = FALSE
 ) {
   if (dropdown) {

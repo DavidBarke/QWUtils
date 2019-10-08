@@ -1,0 +1,93 @@
+---
+title: "Konventionen"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Konventionen}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Diese Vignette behandelt mit dem Schreiben von Code verbundene Konventionen. Sie erweitert den [tidyverse style guide](https://style.tidyverse.org/) um zusätzliche Regeln, die insbesondere bei der Programmierung mit `shiny` eingehalten werden müssen.
+
+# Variablennamen
+
+Der snake_case ist zu verwenden. Innerhalb der Serverfunktion müssen Variablen, die reaktive Eigenschaften besitzen besonders gekennzeichnet werden, um die Wartbarkeit und Übersichtlichkeit des Codes zu erhöhen. Dazu wird dem eigentlichen Variablennamen ein Suffix angehängt (VARIABLENNAME_SUFFIX). Der jeweilige Suffix ist der folgenden Liste zu entnehmen:
+
+* `reactive`: `r`
+* `reactiveVal`: `rv`
+* `reactiveValues`: `rvs`
+
+Beispiel:
+```{r, eval = FALSE}
+data_r <- shiny::reactive({
+  mtcars
+})
+
+data_rv <- shiny::reactiveVal(mtcars)
+
+data_rvs <- shiny::reactiveValues(
+  mtcars = mtcars
+)
+```
+
+Namen von Funktionsargumenten müssen ebenfalls dieser Konvention entsprechen. Falls einem Argument nicht nur ein reaktiver Wert übergeben werden kann, kann auf den Suffix verzichtet werden. Ausgenommen von dieser Regel ist das `reactiveValues` mit dem Namen `rvs`, welches das standardmäßige `reactiveValues` in der Serverfunktion darstellt.
+
+# Indentierung
+
+## Funktionsdefinitionen
+
+Funktionen, mit vielen Argumenten, werden wie folgt umgebrochen:
+
+```{r, eval = FALSE}
+fun <- function(
+  input, output, session, .parent, some_long_argument, some_even_longer_argument
+) {
+  # Code
+}
+```
+
+## Funktionsaufrufe
+
+Entgegen dem tidyverse style guide sind **alle** Argumente mit Namen aufzurufen (also nicht nur Argumente mit Default-Werten). Für Funktionen mit hinreichend vielen Argumenten wird nach jedem Argument umgebrochen:
+
+```{r, eval = FALSE}
+shiny::callModule(
+  module = module_server_function,
+  id = "id_module",
+  .parent = self,
+  .values = .values
+)
+```
+
+## Map
+
+Bei der Verwendung der `map`-Famile aus dem Package `purrr` werden die Argumente, falls möglich, in einer Zeile geschrieben und die übergebene Funktion in nachfolgenden Zeilen ausgeführt. Argumente müssen nicht mit Namen aufgerufen werden:
+
+```{r, eval = FALSE}
+letter_list <- purrr::map(LETTERS, function(letter) {
+  letter
+})
+```
+
+Falls der Platz nicht ausreicht, wird umgebrochen:
+
+```{r, eval = FALSE}
+numbered_letters <- purrr::map2(
+  LETTERS,
+  seq_along(LETTERS),
+  function(letter, number) {
+    paste0(letter, number)
+  }
+)
+```
+
+
+
+
