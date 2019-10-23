@@ -6,7 +6,7 @@
 \usage{
 actionButtonQW(inputId, label, icon = NULL, style = "material-flat",
   color = "default", size = "xs", block = FALSE, no_outline = TRUE,
-  tooltip = NULL, dropdown = FALSE)
+  tooltip = NULL, ..., dropdown = FALSE)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

@@ -59,5 +59,23 @@ GroupObject <- R6::R6Class(
 #' @export
 DatasetObject <- R6::R6Class(
   classname = "DatasetObject",
-  inherit = Object
+  inherit = Object,
+  public = list(
+    initialize = function(name = "", dataset) {
+      super$initialize(name = name)
+
+      private$dataset <- reactive_member(dataset)
+    },
+
+    get_dataset = function() {
+      private$dataset()
+    },
+
+    set_dataset = function(dataset) {
+      private$dataset(dataset)
+    }
+  ),
+  private = list(
+    dataset = NULL
+  )
 )
