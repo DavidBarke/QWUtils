@@ -8,18 +8,18 @@
 #'
 #' @section Methods:
 #' \describe{
-#'   \item{\code{new(name, k, rep = 1, center = 0, fac_names = LETTERS[seq_len(k)],
-#'   response_name = "response", index_name = "index", response = NULL)}}{
+#'   \item{\code{new(name, factor_storage, rep = 1, center = 0, response_name =
+#'   "response", index_name = "index", response = NULL}}{
 #'   Initialize the factorial design.
 #'     \tabular{ll}{
 #'       \code{name} \tab \code{\link[base:character]{Character}}. The factorial
 #'       design's name \cr
-#'       \code{k} \tab \code{\link[base:integer]{Integer}}. Number of variable
-#'       factors. \cr
-#'       \code{center} \tab \code{\link[base:integer]{Integer}}. Number of
-#'       center points. \cr
-#'       \code{fac_names} \tab \code{\link[base:character]{Character}} vector
-#'       containing the names of the variable factors. \cr
+#'       \code{factor_storage} \cr \code{\link{ObjectStorage}} of  objects of
+#'       class \code{\link[FacDesignFactor]{FacDesignFactor}}. \cr
+#'       \code{rep} \tab \code{\link[base:numeric]{Numeric}} value giving the
+#'       number of replicates per factor combination. \cr
+#'       \code{center} \tab Currently defunct. \code{\link[base:integer]{Integer}}.
+#'       Number of center points. \cr
 #'       \code{response_name} \tab \code{\link[base:character]{Character}}. Name
 #'       of the response variable. \cr
 #'       \code{index_name} \tab \code{\link[base:character]{Character}}. Name of
@@ -101,7 +101,7 @@ FacDesign <- R6::R6Class(
   classname = "FacDesign",
   public = list(
     initialize = function(
-      name, rep = 1, center = 0, factor_storage,
+      name, factor_storage, rep = 1, center = 0,
       response_name = "response", index_name = "index", response = NULL
     ) {
       k <- factor_storage$get_length()
