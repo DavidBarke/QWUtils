@@ -32,6 +32,8 @@ collapsible_tabBox <- function(
   ..., id = NULL, selected = NULL, title = NULL, width = 6, height = NULL,
   side = c("left", "right")
 ) {
+  print("ID")
+  print(id)
   unique_id <- shiny:::createUniqueId()
   ui <- shinydashboard::box(
     title = title,

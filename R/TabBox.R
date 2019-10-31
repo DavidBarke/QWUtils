@@ -159,7 +159,7 @@ TabBox <- R6::R6Class(
           select = select,
           session = private$session
         )
-        if (closeable) private$createActionButton(tab)
+        if (closeable) private$createActionButton(data_value)
       }
       invisible(self)
     },
@@ -191,7 +191,7 @@ TabBox <- R6::R6Class(
           select = select,
           session = private$session
         )
-        if (closeable) private$createActionButton(tab)
+        if (closeable) private$createActionButton(data_value)
       }
       invisible(self)
     },
@@ -215,7 +215,7 @@ TabBox <- R6::R6Class(
       if (!private$once) {
         if (!collapsible) {
           ui <- shinydashboard::tabBox(
-            id = private$id,
+            id = private$session$ns(private$id),
             title = private$title,
             width = private$width,
             height = private$height,
@@ -228,7 +228,7 @@ TabBox <- R6::R6Class(
             width = private$width,
             height = private$height,
             shinydashboard::tabBox(
-              id = private$id,
+              id = private$session$ns(private$id),
               width = 12,
               side = private$side
             )
@@ -261,12 +261,12 @@ TabBox <- R6::R6Class(
       div_button <- div(
         class = "div-btn-close",
         actionButton(
-          inputId = closeId,
+          inputId = private$session$ns(closeId),
           label = NULL,
           icon = icon("window-close")
         )
       )
-      selector <- paste0("#", private$id, " li a[data-value=\"", data_value, "\"]")
+      selector <- paste0("#", private$session$ns(private$id), " li a[data-value=\"", data_value, "\"]")
       insertUI(
         selector = selector,
         where = "beforeEnd",
