@@ -192,13 +192,18 @@ ContentList <- R6::R6Class(
     },
 
     hide_content_element_by_id = function(content_element_id) {
-      if (content_element_id %in% private$element_id) {
+      #if (content_element_id %in% private$element_id) {
         content_element <- self$get_content_element_by_id(content_element_id)
         element_container_id <- content_element$get("container_id")
         shinyjs::hide(
           selector = paste0("#", element_container_id)
         )
-      }
+      #}
+    },
+
+    remove_tab = function(content_element_id, target) {
+      content_element <- self$get_content_element_by_id(content_element_id)
+      content_element$remove_tab(target)
     },
 
     update_tab = function(content_element_id, selected) {
