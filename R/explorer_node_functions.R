@@ -22,21 +22,25 @@ get_ancestor_node <- function(node, generation) {
   node
 }
 
-#' Get distance of a node to the root node
+#' Get distance of a node to an ancestor node
 #'
-#' Get the distance of a node to the root node.
+#' Get the distance of a node to another node in the tree
 #'
-#' @param node A \code{\link{ExplorerNode}}.
+#' @param node,ancestor_node An object of class \code{\link{ExplorerNode}}.
 #'
-#' If \code{node} is the root node, \code{0} is returned.
+#' If \code{node} is the ancestor node, \code{0} is returned. If \code{ancestor_node}
+#' is no ancestor of \code{node}, \code{\link[base:NULL]{NULL}} is returned.
 #'
 #' @export
-get_node_distance <- function(node) {
-  distance <- -1
+get_node_distance <- function(node, ancestor_node) {
+  distance <- 0
 
-  while(!purrr::is_null(node)) {
+  while(!(node$get_id() == ancestor_node$get_id())) {
     distance <- distance + 1
     node <- node$get_parent_node()
+    if (purrr::is_null(node)) {
+      return(NULL)
+    }
   }
 
   distance
