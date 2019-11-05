@@ -12,7 +12,7 @@
 #'   \code{\link[shiny:reactive]{reactive}}) or vector containing the initial
 #'   value of the text input.
 #' @param .allow_reset If \code{\link[base:logical]{TRUE}}, reset to the initial
-#'   value via an \code{\link[shiny:actionButton]} is enabled.
+#'   value via an \code{\link[shiny]{actionButton}} is enabled.
 #' @param .reset \code{\link[shiny:reactive]{Reactive}}. See 'Details'.
 #' @param .update_value \code{\link[shiny:reactive]{Reactive}}. See 'Details'.
 #' @param .error_controller An \code{\link{ErrorController}} or

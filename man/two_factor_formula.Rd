@@ -11,7 +11,7 @@ two_factor_formula(response_name, factor_1, factor_2,
 \arguments{
 \item{response_name}{Name of the response variable.}
 
-\item{factor_1, factor_2}{A \code{\link{FacDesignFactor}} object.}
+\item{factor_1, factor_2}{A \code{FacDesignFactor} object.}
 
 \item{interactions}{If \code{\link[base:logical]{TRUE}}, the interaction
 between both factors is included in the formula.}

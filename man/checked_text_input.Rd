@@ -27,7 +27,7 @@ you could also use any other HTML, like an image.}
 value of the text input.}
 
 \item{.allow_reset}{If \code{\link[base:logical]{TRUE}}, reset to the initial
-value via an \code{\link[shiny:actionButton]} is enabled.}
+value via an \code{\link[shiny]{actionButton}} is enabled.}
 
 \item{.reset}{\code{\link[shiny:reactive]{Reactive}}. See 'Details'.}
 

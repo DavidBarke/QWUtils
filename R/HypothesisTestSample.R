@@ -1,7 +1,7 @@
 #' HypothesisTestSample
 #'
 #' \code{\link[R6:R6Class]{R6Class}} representing a sample of a
-#' \code{\link{HypothesisTest}}
+#' \code{HypothesisTest}
 #'
 #' @section Usage:
 #' \preformatted{sample <- HypothesisTestSample$new()

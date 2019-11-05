@@ -95,8 +95,8 @@ server <- function(input, output, session) {
       \code{session} \tab A shiny \code{\link[shiny:session]{session}} object.
     }
   }
-  \item{\code{tabBox()}}{Return the HTML representing the \code{\link[shinydashboard]{
-  tabBox}}.
+  \item{\code{tabBox()}}{Return the HTML representing the
+  \code{\link[shinydashboard]{tabBox}}.
   }
 }
 }

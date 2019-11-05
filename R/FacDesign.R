@@ -16,7 +16,7 @@
 #'       design's name \cr
 #'       \code{factor_nodes} \cr An object of class \code{\link{ExplorerNode}}
 #'       with children of explorer_class "fac_design_factor_explorer_class"
-#'       storing objects of class \code{\link{FacDesignFactor}}. \cr
+#'       storing objects of class \code{FacDesignFactor}. \cr
 #'       \code{rep} \tab \code{\link[base:numeric]{Numeric}} value giving the
 #'       number of replicates per factor combination. \cr
 #'       \code{center} \tab Currently defunct. \code{\link[base:integer]{Integer}}.

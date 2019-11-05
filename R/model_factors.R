@@ -64,7 +64,7 @@ all_effects <- function(factors) {
 #' response variable.
 #'
 #' @param response_name Name of the response variable.
-#' @param factor_1,factor_2 A \code{\link{FacDesignFactor}} object.
+#' @param factor_1,factor_2 A \code{FacDesignFactor} object.
 #' @param interactions If \code{\link[base:logical]{TRUE}}, the interaction
 #' between both factors is included in the formula.
 #'
