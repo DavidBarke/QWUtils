@@ -9,7 +9,7 @@ doe_interaction_plot(fac_design, factor_1, factor_2)
 \arguments{
 \item{fac_design}{A \code{\link{FacDesign}} object.}
 
-\item{factor_1, factor2}{A \code{\link{FacDesignFactor}} object in
+\item{factor_1, factor2}{A \code{FacDesignFactor} object in
 \code{fac_design$get_factor_storage()}.}
 }
 \description{

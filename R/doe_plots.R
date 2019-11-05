@@ -58,7 +58,7 @@ doe_effect_plot <- function(fac_design, factor_ids = NULL) {
 #' Visualize the interaction between two factors of a full factorial design.
 #'
 #' @param fac_design A \code{\link{FacDesign}} object.
-#' @param factor_1,factor2 A \code{\link{FacDesignFactor}} object in
+#' @param factor_1,factor2 A \code{FacDesignFactor} object in
 #' \code{fac_design$get_factor_storage()}.
 #'
 #' @export
@@ -167,7 +167,7 @@ doe_pareto_plot <- function(
 #' a two-dimensional contour plot.
 #'
 #' @param fac_design A \code{\link{FacDesign}} object.
-#' @param factor_1,factor2 A \code{\link{FacDesignFactor}} object in
+#' @param factor_1,factor2 A \code{FacDesignFactor} object in
 #' \code{fac_design$get_factor_storage()}.
 #' @param interactions If \code{\link[base:logical]{TRUE}}, interactions between
 #' \code{factor_1} and \code{factor_2} are considered.

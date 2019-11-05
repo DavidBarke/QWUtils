@@ -9,7 +9,7 @@ doe_surface_plot(fac_design, factor_1, factor_2, interactions = FALSE)
 \arguments{
 \item{fac_design}{A \code{\link{FacDesign}} object.}
 
-\item{factor_1}{A \code{\link{FacDesignFactor}} object in
+\item{factor_1}{A \code{FacDesignFactor} object in
 \code{fac_design$get_factor_storage()}.}
 
 \item{interactions}{If \code{\link[base:logical]{TRUE}}, interactions between

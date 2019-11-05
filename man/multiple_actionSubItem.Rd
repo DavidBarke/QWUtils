@@ -7,7 +7,6 @@
 multiple_actionSubItem(inputId_list, label_list)
 }
 \description{
-This function is used internal in \code{\link{
-multiple_actionItem}}. It could be used manually as the \code{...} argument
+This function is used internal in \code{multiple_actionItem}. It could be used manually as the \code{...} argument
 to \code{\link{actionItem}}.
 }
