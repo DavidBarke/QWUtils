@@ -10,14 +10,26 @@
 #' of occurences per script is returned. If \code{\link[base:logical]{FALSE}},
 #' a \code{\link[base:character]{character}} vector with the scripts containing
 #' at least one occurence is returned.
+#' @param indices \code{\link[base:integer]{Integer}} vector specifying the indices
+#' of lines to be searched in each script. This is useful, if you get an Shiny
+#' error indicating the line in which the error occured, but not the script. If
+#' \code{\link[base]{NULL}} all lines of each script get searched.
 #'
 #' @export
-find_code <- function(directory, pattern, recursive = TRUE, count = FALSE) {
+find_code <- function(
+  directory, pattern, recursive = TRUE, count = FALSE, indices = NULL
+) {
   scripts <- script_paths(directory, recursive = recursive)
 
   list_of_lines <- purrr::map(scripts, function(script) {
     suppressWarnings(readLines(script))
   })
+
+  if (!purrr::is_null(indices)) {
+    list_of_lines <- purrr::map(list_of_lines, function(lines) {
+      stats::na.omit(lines[indices])
+    })
+  }
 
   detected <- purrr::map_lgl(list_of_lines, function(lines) {
     any(stringr::str_detect(lines, pattern = pattern))

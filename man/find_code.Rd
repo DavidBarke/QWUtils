@@ -4,7 +4,8 @@
 \alias{find_code}
 \title{Find scripts containing specific code}
 \usage{
-find_code(directory, pattern, recursive = TRUE, count = FALSE)
+find_code(directory, pattern, recursive = TRUE, count = FALSE,
+  indices = NULL)
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}
@@ -31,6 +32,11 @@ recursively searched for R scripts.}
 of occurences per script is returned. If \code{\link[base:logical]{FALSE}},
 a \code{\link[base:character]{character}} vector with the scripts containing
 at least one occurence is returned.}
+
+\item{indices}{\code{\link[base:integer]{Integer}} vector specifying the indices
+of lines to be searched in each script. This is useful, if you get an Shiny
+error indicating the line in which the error occured, but not the script. If
+\code{\link[base]{NULL}} all lines of each script get searched.}
 }
 \description{
 Find all the R scripts in a directory that contain some code as defined in
