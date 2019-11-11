@@ -15,14 +15,14 @@ R6Class representing a factorial design.
 \section{Methods}{
 
 \describe{
-  \item{\code{new(name, factor_storage, rep = 1, center = 0, response_name =
+  \item{\code{new(name, factor_node, rep = 1, center = 0, response_name =
   "response", index_name = "index", response = NULL}}{
   Initialize the factorial design.
     \tabular{ll}{
       \code{name} \tab \code{\link[base:character]{Character}}. The factorial
       design's name \cr
-      \code{factor_nodes} \cr An object of class \code{\link{ExplorerNode}}
-      with children of explorer_class "fac_design_factor_explorer_class"
+      \code{factor_node} \cr An object of class \code{\link{ExplorerNode}}
+      with children of explorer_class "fac_design_factor"
       storing objects of class \code{\link{FacDesignFactor}}. \cr
       \code{rep} \tab \code{\link[base:numeric]{Numeric}} value giving the
       number of replicates per factor combination. \cr

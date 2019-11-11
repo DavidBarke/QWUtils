@@ -8,14 +8,14 @@
 #'
 #' @section Methods:
 #' \describe{
-#'   \item{\code{new(name, factor_storage, rep = 1, center = 0, response_name =
+#'   \item{\code{new(name, factor_node, rep = 1, center = 0, response_name =
 #'   "response", index_name = "index", response = NULL}}{
 #'   Initialize the factorial design.
 #'     \tabular{ll}{
 #'       \code{name} \tab \code{\link[base:character]{Character}}. The factorial
 #'       design's name \cr
-#'       \code{factor_nodes} \cr An object of class \code{\link{ExplorerNode}}
-#'       with children of explorer_class "fac_design_factor_explorer_class"
+#'       \code{factor_node} \cr An object of class \code{\link{ExplorerNode}}
+#'       with children of explorer_class "fac_design_factor"
 #'       storing objects of class \code{\link{FacDesignFactor}}. \cr
 #'       \code{rep} \tab \code{\link[base:numeric]{Numeric}} value giving the
 #'       number of replicates per factor combination. \cr
@@ -102,17 +102,18 @@ FacDesign <- R6::R6Class(
   classname = "FacDesign",
   public = list(
     initialize = function(
-      name, factor_nodes, rep = 1, center = 0,
+      name, factor_node, rep = 1, center = 0,
       response_name = "response", index_name = "index", response = NULL
     ) {
-      # factor_nodes children must not be group nodes
-      purrr::walk(factor_nodes$children(), function(node) {
-        if (node$is_group_node()) {
-          stop("FacDesign: factor_nodes' children must not be group nodes")
+      # factor_node children must not be group nodes
+      purrr::walk(factor_node$get_children()$get_objects(), function(node) {
+        if (!(node$get_explorer_class_id() == "fac_design_factor")) {
+          stop("FacDesign: factor_node's children must be of explorer_class
+               'fac_design_factor'")
         }
       })
 
-      k <- length(factor_nodes$children())
+      k <- length(factor_node$get_children())
 
       private$names <- list(
         index = reactiveVal(index_name),
@@ -124,7 +125,7 @@ FacDesign <- R6::R6Class(
         index = seq_len((2^k)*rep + center)
       )
 
-      private$factor_nodes <- factor_nodes
+      private$factor_node <- factor_node
       private$linear_model_storage <- ObjectStorage$new(
         allowed_classes = "LinearModel"
       )
@@ -165,7 +166,7 @@ FacDesign <- R6::R6Class(
     get_default_formula = function() {
       paste0(
         private$names$response(), "~",
-        private$factor_nodes$children()[[1]]$get_object()$get_name()
+        private$factor_node$get_children()[[1]]$get_object()$get_name()
       )
     },
 
@@ -193,8 +194,12 @@ FacDesign <- R6::R6Class(
       private$names$name()
     },
 
-    get_factor_nodes = function() {
-      private$factor_nodes
+    get_factor_node = function() {
+      private$factor_node
+    },
+
+    get_factor_storage = function() {
+      private$factor_node$get_children()
     },
 
     get_index_name = function() {
@@ -211,7 +216,7 @@ FacDesign <- R6::R6Class(
     ) {
       fac_design_table <- private$fac_design_table()
 
-      factor_names <- purrr::map_chr(private$factor_nodes$children(), function(node) {
+      factor_names <- purrr::map_chr(private$factor_node$get_children()$get_objects(), function(node) {
         node$get_object()$get_name()
       })
 
@@ -251,7 +256,7 @@ FacDesign <- R6::R6Class(
           length(unique(new_names)) == length(new_names)
         )
         purrr::walk2(
-          private$factor_nodes$children(),
+          private$factor_node$children(),
           new_names,
           function(node, name) {
             node$get_object()$set_name(name)
@@ -283,7 +288,7 @@ FacDesign <- R6::R6Class(
   ),
   private = list(
     fac_design_table = NULL,
-    factor_nodes = NULL,
+    factor_node = NULL,
     .has_response = NULL,
     names = list(
       index = NULL,
