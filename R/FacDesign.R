@@ -94,6 +94,8 @@
 #'   }
 #' }
 #'
+#' @importFrom shinyExplorer ObjectStorage
+#'
 #' @name FacDesign
 NULL
 
@@ -113,49 +115,31 @@ FacDesign <- R6::R6Class(
         }
       })
 
-      k <- length(factor_node$get_children())
-
       private$names <- list(
         index = reactiveVal(index_name),
         name = reactiveVal(name),
         response = reactiveVal(response_name)
       )
 
-      fac_design_table <- tibble(
-        index = seq_len((2^k)*rep + center)
-      )
+      private$center <- center
+      private$rep <- rep
 
       private$factor_node <- factor_node
       private$linear_model_storage <- ObjectStorage$new(
         allowed_classes = "LinearModel"
       )
 
-      for (i in seq_len(k)) {
-        fac_permutation <- rep(
-          rep(rep(c(-1, 1), each = 2^(k - i)), times = 2^(i - 1)), times = rep
-        )
-        fac_design_table[[i + 1]] <- c(
-          fac_permutation,
-          rep(0, times = center)
-        )
-      }
-
-      fac_design_table$response <- if (is.null(response)) {
+      if (purrr::is_null(response)) {
         private$.has_response <- reactiveVal(FALSE)
-        NA
       } else {
         private$.has_response <- reactiveVal(TRUE)
-        response
       }
 
-      private$.nrow <- reactiveVal(nrow(fac_design_table))
-      private$fac_design_table <- reactiveVal(fac_design_table)
+      private$response <- response
     },
 
     add_response = function(response) {
-      fac_design_table <- private$fac_design_table()
-      fac_design_table$response <- response
-      private$fac_design_table(fac_design_table)
+      private$response <- response
       private$.has_response(TRUE)
     },
 
@@ -194,12 +178,28 @@ FacDesign <- R6::R6Class(
       private$names$name()
     },
 
+    get_factor_ids = function() {
+      ids <- purrr::map_chr(private$factor_node$get_children()$get_objects(), function(node) {
+        node$get_object()$get_id()
+      })
+
+      names(ids) <- self$get_factor_names()
+
+      ids
+    },
+
+    get_factor_names = function() {
+      purrr::map_chr(private$factor_node$get_children()$get_objects(), function(node) {
+        node$get_object()$get_name()
+      })
+    },
+
     get_factor_node = function() {
       private$factor_node
     },
 
     get_factor_storage = function() {
-      private$factor_node$get_children()
+      private$factor_node$get_child_objects()
     },
 
     get_index_name = function() {
@@ -216,12 +216,10 @@ FacDesign <- R6::R6Class(
     ) {
       fac_design_table <- private$fac_design_table()
 
-      factor_names <- purrr::map_chr(private$factor_node$get_children()$get_objects(), function(node) {
-        node$get_object()$get_name()
-      })
+      factor_ids <- self$get_factor_storage()$get_ids()
 
       names(fac_design_table) <- c(
-        private$names$index(), factor_names,
+        private$names$index(), factor_ids,
         private$names$response()
       )
       return_names <- character()
@@ -229,11 +227,12 @@ FacDesign <- R6::R6Class(
         return_names <- c(return_names, private$names$index())
       }
       if (factors) {
-        return_names <- c(return_names, private$factor_storage$get_ids())
+        return_names <- c(return_names, self$get_factor_storage()$get_ids())
       }
       if (response) {
         return_names <- c(return_names, private$names$response())
       }
+
       fac_design_table[return_names]
     },
 
@@ -242,7 +241,7 @@ FacDesign <- R6::R6Class(
     },
 
     nrow = function() {
-      private$.nrow()
+      nrow(private$fac_design_table())
     },
 
     remove_lm = function(id) {
@@ -287,7 +286,32 @@ FacDesign <- R6::R6Class(
     }
   ),
   private = list(
-    fac_design_table = NULL,
+    center = numeric(),
+    fac_design_table = function() {
+      k <- private$factor_node$get_child_objects()$get_length()
+
+      fac_design_table <- tibble(
+        index = seq_len((2^k)*private$rep + private$center)
+      )
+
+      for (i in seq_len(k)) {
+        fac_permutation <- rep(
+          rep(rep(c(-1, 1), each = 2^(k - i)), times = 2^(i - 1)), times = private$rep
+        )
+        fac_design_table[[i + 1]] <- c(
+          fac_permutation,
+          rep(0, times = private$center)
+        )
+      }
+
+      fac_design_table$response <- if (private$.has_response()) {
+        private$response
+      } else {
+        NA
+      }
+
+      fac_design_table
+    },
     factor_node = NULL,
     .has_response = NULL,
     names = list(
@@ -295,7 +319,8 @@ FacDesign <- R6::R6Class(
       name = NULL,
       response = NULL
     ),
-    .nrow = NULL,
-    linear_model_storage = NULL
+    linear_model_storage = NULL,
+    rep = numeric(),
+    response = NULL
   )
 )
