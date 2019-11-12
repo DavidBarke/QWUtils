@@ -39,8 +39,11 @@ single_rename <- function(
   output$module_ui <- shiny::renderUI({
     if (rvs$mode_rename) {
       ui <- htmltools::tagList(
-        QWUtils::checked_text_input_ui(
-          id = ns("id_checked_text_input")
+        htmltools::span(
+          class = "rename-text-input",
+          QWUtils::checked_text_input_ui(
+            id = ns("id_checked_text_input")
+          )
         ),
         shiny::uiOutput(
           outputId = ns("confirm_rename"),

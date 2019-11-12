@@ -5,6 +5,8 @@
 #'
 #' @param factors Factor names.
 #' @param interaction_level Maximum length of interaction between factors.
+#'
+#' @export
 factors_to_formula_text <- function(factors, interaction_level = 0) {
   form_list <- purrr::map(seq_len(interaction_level + 1), function(level) {
     conbns <- utils::combn(factors, level)
