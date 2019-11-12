@@ -18,6 +18,7 @@ count_directory_lines <- function(
   remove = c("none", "comments", "roxygen")
 ) {
   output <- match.arg(output)
+  remove <- match.arg(remove)
 
   scripts <- script_paths(directory, recursive = recursive)
 
