@@ -218,11 +218,13 @@ checked_text_input_ui <- function(
     ),
     shiny::uiOutput(
       outputId = ns("name_error"),
-      inline = TRUE
+      inline = TRUE,
+      class = "error-msg"
     ),
     shiny::uiOutput(
       outputId = ns("error_controller"),
-      inline = TRUE
+      inline = TRUE,
+      class = "error-msg"
     )
   )
 }
