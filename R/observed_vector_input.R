@@ -18,7 +18,11 @@ observed_vector_input <- function(
 
   ns <- session$ns
 
-  self <- QWUtils::Node$new(ns("observed_vector_input"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("observed_vector_input", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   output$text_input <- shiny::renderUI({
 

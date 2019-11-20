@@ -70,7 +70,11 @@ data_selector_dataset_dropdown <- function(
 
   ns <- session$ns
 
-  self <- Node$new(ns("data_selector_dataset_dropdown"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("data_selector_dataset_dropdown", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- reactiveValues(
     open_dataset_counter = 0

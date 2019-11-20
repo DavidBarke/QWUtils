@@ -61,7 +61,11 @@ data_selector_group_dropdown <- function(
 
   ns <- session$ns
 
-  self <- Node$new(ns("data_selector_group_dropdown"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("data_selector_group_dropdown", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- reactiveValues(
     new_group_name = NULL

@@ -35,7 +35,11 @@ significance_input <- function(
 
   ns <- session$ns
 
-  self <- QWUtils::Node$new(ns("significance_input"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("significance_input", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- shiny::reactiveValues(
     style_numeric = TRUE,

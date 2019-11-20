@@ -30,7 +30,11 @@ single_rename <- function(
 
   ns <- session$ns
 
-  self <- QWUtils::Node$new(ns("single_rename"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("single_rename", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- shiny::reactiveValues(
     mode_rename = FALSE

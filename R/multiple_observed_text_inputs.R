@@ -15,7 +15,11 @@ multiple_observed_text_inputs <- function(
 
   ns <- session$ns
 
-  self <- Node$new(ns("multiple_observed_text_inputs"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("multiple_observed_text_inputs", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- reactiveValues(
     count = 0,

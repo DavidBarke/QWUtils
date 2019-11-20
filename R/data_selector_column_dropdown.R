@@ -65,7 +65,11 @@ data_selector_column_dropdown <- function(
 
   ns <- session$ns
 
-  self <- Node$new(ns("column_dropdown"), .parent, session)
+  self <- .parent$add_child(
+    object = SessionObject$new("data_selector_column_dropdown", session),
+    removable = FALSE,
+    return = "child"
+  )
 
   rvs <- reactiveValues(
     counter_column_datatable = 0
