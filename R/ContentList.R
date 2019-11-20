@@ -174,7 +174,6 @@ ContentList <- R6::R6Class(
       content_element <- self$get_content_element_by_id(
         id = content_element_id
       )
-      stopifnot("content_tabBox" %in% class(content_element))
       content_element$append_tab(
         tab = tab,
         select = select,
