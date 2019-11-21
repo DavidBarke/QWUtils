@@ -17,9 +17,10 @@
 #'
 #' @export
 find_code <- function(
-  directory, pattern, recursive = TRUE, count = FALSE, indices = NULL
+  directory, pattern, recursive = TRUE, count = FALSE, indices = NULL,
+  ending = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$"
 ) {
-  scripts <- script_paths(directory, recursive = recursive)
+  scripts <- script_paths(directory, recursive = recursive, ending = ending)
 
   list_of_lines <- purrr::map(scripts, function(script) {
     suppressWarnings(readLines(script))

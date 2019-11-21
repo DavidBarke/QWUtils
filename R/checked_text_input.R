@@ -45,11 +45,13 @@ checked_text_input <- function(
 
   ns <- session$ns
 
-  self <- .parent$add_child(
-    object = SessionObject$new("checked_text_input", session),
-    removable = FALSE,
-    return = "child"
-  )
+  self <- shiny::isolate({
+    .parent$add_child(
+      object = SessionObject$new("checked_text_input", session),
+      removable = FALSE,
+      return = "child"
+    )
+  })
 
   rvs <- shiny::reactiveValues(
     # The value is retrieved from the ui the first time the input renders

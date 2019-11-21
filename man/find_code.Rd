@@ -5,7 +5,7 @@
 \title{Find scripts containing specific code}
 \usage{
 find_code(directory, pattern, recursive = TRUE, count = FALSE,
-  indices = NULL)
+  indices = NULL, ending = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$")
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}

@@ -8,12 +8,12 @@
 #' @inheritParams base::list.files
 #'
 #' @export
-script_paths <- function(directory, recursive = TRUE, full.names = TRUE) {
+script_paths <- function(directory, recursive = TRUE, full.names = TRUE, ending = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$") {
   dir(
     directory,
     recursive = recursive,
     full.names = full.names,
-    pattern = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$"
+    pattern = ending
   )
 }
 

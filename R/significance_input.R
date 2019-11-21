@@ -35,11 +35,13 @@ significance_input <- function(
 
   ns <- session$ns
 
-  self <- .parent$add_child(
-    object = SessionObject$new("significance_input", session),
-    removable = FALSE,
-    return = "child"
-  )
+  self <- shiny::isolate({
+    .parent$add_child(
+      object = SessionObject$new("significance_input", session),
+      removable = FALSE,
+      return = "child"
+    )
+  })
 
   rvs <- shiny::reactiveValues(
     style_numeric = TRUE,

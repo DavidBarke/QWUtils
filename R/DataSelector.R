@@ -377,7 +377,13 @@ DataSelector <- R6::R6Class(
 
       ns <- session$ns
 
-      self <- Node$new(ns("data_selector_module"), .parent, session)
+      self <- shiny::isolate({
+        .parent$add_child(
+          object = SessionObject$new("data_selector", session),
+          removable = FALSE,
+          return = "child"
+        )
+      })
 
       .envir <- environment()
 

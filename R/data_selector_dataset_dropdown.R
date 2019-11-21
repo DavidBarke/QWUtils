@@ -70,11 +70,13 @@ data_selector_dataset_dropdown <- function(
 
   ns <- session$ns
 
-  self <- .parent$add_child(
-    object = SessionObject$new("data_selector_dataset_dropdown", session),
-    removable = FALSE,
-    return = "child"
-  )
+  self <- shiny::isolate({
+    .parent$add_child(
+      object = SessionObject$new("data_selector_dataset_dropdown", session),
+      removable = FALSE,
+      return = "child"
+    )
+  })
 
   rvs <- reactiveValues(
     open_dataset_counter = 0

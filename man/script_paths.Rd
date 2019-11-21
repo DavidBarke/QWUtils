@@ -4,7 +4,8 @@
 \alias{script_paths}
 \title{Get paths of R scripts}
 \usage{
-script_paths(directory, recursive = TRUE, full.names = TRUE)
+script_paths(directory, recursive = TRUE, full.names = TRUE,
+  ending = ".*[.](r|R|s|S|q)([.](lnk|LNK))*$")
 }
 \arguments{
 \item{directory}{A path to the directory containing the R scripts.}
