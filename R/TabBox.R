@@ -118,10 +118,8 @@ TabBox <- R6::R6Class(
           inputId = private$id,
           selected = data_value
         )
-        return(FALSE)
       } else {
         private$open_tab_values <- c(private$open_tab_values, data_value)
-        private$tab_values <- c(private$tab_values, data_value)
         shiny::appendTab(
           inputId = private$id,
           tab = tab,
@@ -129,6 +127,12 @@ TabBox <- R6::R6Class(
           session = private$session
         )
         if (closeable) private$createActionButton(data_value)
+      }
+
+      if (data_value %in% private$tab_values) {
+        return(FALSE)
+      } else {
+        private$tab_values <- c(private$tab_values, data_value)
         return(TRUE)
       }
     },

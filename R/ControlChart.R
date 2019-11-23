@@ -135,7 +135,7 @@ ControlChart <- R6::R6Class(
 
       private$type <- shiny::reactiveVal(type)
 
-      private$control_line_storage <- QWUtils::ObjectStorage$new(
+      private$control_line_storage <- shinyExplorer::ObjectStorage$new(
         allowed_class = "ControlChartControlLine"
       )
 
@@ -155,7 +155,7 @@ ControlChart <- R6::R6Class(
         )
       )
 
-      private$phase_storage <- QWUtils::ObjectStorage$new(
+      private$phase_storage <- shinyExplorer::ObjectStorage$new(
         allowed_classes = "ControlChartPhase"
       )
 
