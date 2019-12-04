@@ -5,18 +5,10 @@ ControlChartControlLine <- R6::R6Class(
   classname = "ControlChartControlLine",
   public = list(
     initialize = function(quantile = 0) {
-      if (!("counter" %in% names(self$static))) {
-        self$static$counter <- 1
-      } else {
-        self$static$counter <- self$static$counter + 1
-      }
-
-      private$id <- as.character(self$static$counter)
+      private$id <- stringi::stri_rand_strings(1, 8)
       private$name <- private$id
       private$quantile <- shiny::reactiveVal(quantile)
     },
-
-    static = new.env(),
 
     get_id = function() {
       private$id

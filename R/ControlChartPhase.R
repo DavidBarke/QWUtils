@@ -59,12 +59,7 @@ ControlChartPhase <- R6::R6Class(
   classname = "ControlChartPhase",
   public = list(
     initialize = function(name, preliminary = FALSE) {
-      if (!("counter" %in% names(self$static))) {
-        self$static$counter <- 1
-      } else {
-        self$static$counter <- self$static$counter + 1
-      }
-      private$id <- as.character(self$static$counter)
+      private$id <- stringi::stri_rand_strings(1, 8)
 
       private$name <- shiny::reactiveVal(name)
       private$preliminary <- shiny::reactiveVal(preliminary)
@@ -72,8 +67,6 @@ ControlChartPhase <- R6::R6Class(
         allowed_classes = c("ControlChartSample", "ControlChartSampleList")
       )
     },
-
-    static = new.env(),
 
     add_sample = function(sample) {
       private$sample_storage$add_object(sample)

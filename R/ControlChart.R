@@ -124,12 +124,7 @@ ControlChart <- R6::R6Class(
       # values of one element are the phase's values
       type <- match.arg(type)
 
-      if (!("counter" %in% names(self$static))) {
-        self$static$counter <- 1
-      } else {
-        self$static$counter <- self$static$counter + 1
-      }
-      private$id <- as.character(self$static$counter)
+      private$id <- stringi::stri_rand_strings(1, 8)
 
       private$name <- shiny::reactiveVal(name)
 
@@ -164,8 +159,6 @@ ControlChart <- R6::R6Class(
       #   .length = reactive({length(get_phase_ids())})
       # )
     },
-
-    static = new.env(),
 
     add_control_line = function(quantile = 0) {
       control_line <- ControlChartControlLine$new(quantile)

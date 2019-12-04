@@ -38,18 +38,11 @@ HypothesisTestSample <- R6::R6Class(
   classname = "HypothesisTestSample",
   public = list(
     initialize = function(name = "", value = numeric()) {
-      if (!("counter" %in% names(self$static))) {
-        self$static$counter <- 1
-      } else {
-        self$static$counter <- self$static$counter + 1
-      }
-      private$id <- as.character(self$static$counter)
+      private$id <- stringi::stri_rand_strings(1, 8)
 
       private$name <- QWUtils::reactive_member(name)
       private$value <- QWUtils::reactive_member(value)
     },
-
-    static = new.env(),
 
     get_id = function() {
       private$id
