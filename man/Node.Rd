@@ -4,7 +4,7 @@
 \name{Node}
 \alias{Node}
 \title{Store the session object of modules}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
+\format{An object of class \code{R6ClassGenerator} of length 25.}
 \usage{
 Node
 }
