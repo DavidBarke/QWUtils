@@ -48,12 +48,6 @@ Object <- R6::R6Class(
 )
 
 #' @export
-GroupObject <- R6::R6Class(
-  classname = "GroupObject",
-  inherit = Object
-)
-
-#' @export
 DatasetObject <- R6::R6Class(
   classname = "DatasetObject",
   inherit = Object,

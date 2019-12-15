@@ -118,7 +118,7 @@ ContentList <- R6::R6Class(
         )
       } else {
         element_container_id = content_element$get("container_id")
-        shinyjs::show(
+        shinyjs::showElement(
           selector = paste0("#", element_container_id)
         )
       }
@@ -144,7 +144,7 @@ ContentList <- R6::R6Class(
                 session = private$session
               )
             } else {
-              show(
+              shinyjs::showElement(
                 selector = paste0("#", element_container_id)
               )
             }
