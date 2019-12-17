@@ -51,16 +51,19 @@
 #'   \item{\code{add_element_by_id(content_element_id)}}{Show the content element
 #'   with \code{id == content_element_id}.
 #'   }
-#'   \item{\code{append_tab(content_element_id, tab, select = FALSE)}}{Append a
-#'   tab to the content element with \code{id == content_element_id}.
-#'     \tabular{ll}{
-#'       \code{content_element_id} \tab \code{\link[base:character]{Character}}.
-#'       The id of the content element. \cr
-#'       \code{tab} \tab The item to be added (must be created with
-#'       \code{\link[shiny:tabPanel]{tabPanel}}). \cr
-#'       \code{select} \tab If \code{\link[base:logical]{TRUE}} \code{tab} gets
-#'       selected upon being inserted.
-#'     }
+#'   \item{\code{append_tab(content_element_id, tab, select = FALSE,
+#'     closeable = FALSE)}}{Append a tab to the content element with
+#'     \code{id == content_element_id}.
+#'       \tabular{ll}{
+#'         \code{content_element_id} \tab \code{\link[base:character]{Character}}.
+#'         The id of the content element. \cr
+#'         \code{tab} \tab The item to be added (must be created with
+#'         \code{\link[shiny:tabPanel]{tabPanel}}). \cr
+#'         \code{select} \tab If \code{\link[base:logical]{TRUE}} \code{tab} gets
+#'         selected upon being inserted.
+#'         \code{closeable} \tab If \code{\link[base:logical]{TRUE}}, tabPanel is
+#'         closeable via an button with cross icon next to the tabPanel's title.
+#'       }
 #'   }
 #'   \item{\code{get_content_element_by_id(content_element_id)}}{Get the content
 #'   element with \code{id == content_element_id}.
