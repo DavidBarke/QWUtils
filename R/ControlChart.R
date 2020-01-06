@@ -22,22 +22,11 @@
 #'       the control chart.
 #'     }
 #'   }
-#'   \item{\code{add_control_line(quantile = 0)}}{Add a \code{\link{ControlChartControlLine}}
-#'   to the control chart.
-#'     \tabular{ll}{
-#'       \code{quantile} \tab \code{\link[base:numeric]{Numeric}}. The
-#'       quantile which is used to calculate the value of the control line.
-#'     }
+#'   \item{\code{add_control_line(control_line)}}{Add an object of class
+#'     \code{\link{ControlChartControlLine}} to the control chart.
 #'   }
-#'   \item{\code{add_phase(name, preliminary = FALSE)}}{Add a \code{link{ControlChartPhase}}
-#'   to the control chart.
-#'     \tabular{ll}{
-#'       \code{name} \tab \code{\link[base:character]{Character}}. Name of
-#'       the phase. \cr
-#'       \code{preliminary} \tab \code{\link[base:logical]{Logical}}. If
-#'       \code{\link[base:logical]{TRUE}}, phases values are used to calculate
-#'       the control line values, otherwise not.
-#'     }
+#'   \item{\code{add_phase(phase)}}{Add an object of class
+#'     \code{link{ControlChartPhase}} to the control chart.
 #'   }
 #'   \item{\code{get_control_line(id = id)}}{Get the control chart's control line
 #'   with \code{id == id}.
@@ -84,6 +73,8 @@
 #'     }
 #'   }
 #'   \item{\code{get_type()}}{Get the control chart's type.
+#'   }
+#'   \item{remove_phase(id)}{Remove the phase with \code{id == id}.
 #'   }
 #'   \item{\code{set_name(name)}}{Set the control chart's name.
 #'     \tabular{ll}{
@@ -160,15 +151,13 @@ ControlChart <- R6::R6Class(
       # )
     },
 
-    add_control_line = function(quantile = 0) {
-      control_line <- ControlChartControlLine$new(quantile)
+    add_control_line = function(control_line) {
       private$control_line_storage$add_object(control_line)
 
       invisible(self)
     },
 
-    add_phase = function(name, preliminary = FALSE) {
-      phase <- ControlChartPhase$new(name, preliminary)
+    add_phase = function(phase) {
       private$phase_storage$add_object(phase)
 
       invisible(self)
@@ -331,7 +320,7 @@ ControlChart <- R6::R6Class(
           df
         })
 
-        df <- select(df, phase, sample, value)
+        df <- dplyr::select(df, phase, sample, value)
 
         # Count the sample number in perspective of the chart, not the phase
         if (sample_count == "chart") {
@@ -352,6 +341,10 @@ ControlChart <- R6::R6Class(
 
     get_type = function() {
       private$type()
+    },
+
+    remove_phase = function(id) {
+      private$phase_storage$remove_object(id)
     },
 
     set_name = function(name) {

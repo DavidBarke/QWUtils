@@ -23,8 +23,8 @@ ControlChartControlLine
   }
   \item{\code{get_id()}}{Get the control line's id.
   }
-  \item{\code{get_name()}}{Get the control line's name, which is equal to its
-    id.
+  \item{\code{get_name()}}{Get the quantile associated with this control
+    line.
   }
   \item{\code{get_quantile()}}{Get the quantile associated with this control
     line.

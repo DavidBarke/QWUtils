@@ -85,7 +85,6 @@ ErrorControllerList <- R6::R6Class(
       if (length(private$storage()) == 0) {
         error <- FALSE
       } else {
-        print("ELSE HAS ERROR")
         error <- any(purrr::map_lgl(private$storage(), function(error_controller) {
           error_controller$has_error()
         }))

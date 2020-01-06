@@ -29,22 +29,11 @@ control_chart$get_table()
       the control chart.
     }
   }
-  \item{\code{add_control_line(quantile = 0)}}{Add a \code{\link{ControlChartControlLine}}
-  to the control chart.
-    \tabular{ll}{
-      \code{quantile} \tab \code{\link[base:numeric]{Numeric}}. The
-      quantile which is used to calculate the value of the control line.
-    }
+  \item{\code{add_control_line(control_line)}}{Add an object of class
+    \code{\link{ControlChartControlLine}} to the control chart.
   }
-  \item{\code{add_phase(name, preliminary = FALSE)}}{Add a \code{link{ControlChartPhase}}
-  to the control chart.
-    \tabular{ll}{
-      \code{name} \tab \code{\link[base:character]{Character}}. Name of
-      the phase. \cr
-      \code{preliminary} \tab \code{\link[base:logical]{Logical}}. If
-      \code{\link[base:logical]{TRUE}}, phases values are used to calculate
-      the control line values, otherwise not.
-    }
+  \item{\code{add_phase(phase)}}{Add an object of class
+    \code{link{ControlChartPhase}} to the control chart.
   }
   \item{\code{get_control_line(id = id)}}{Get the control chart's control line
   with \code{id == id}.
@@ -91,6 +80,8 @@ control_chart$get_table()
     }
   }
   \item{\code{get_type()}}{Get the control chart's type.
+  }
+  \item{remove_phase(id)}{Remove the phase with \code{id == id}.
   }
   \item{\code{set_name(name)}}{Set the control chart's name.
     \tabular{ll}{
