@@ -60,7 +60,7 @@
 #'         \code{tab} \tab The item to be added (must be created with
 #'         \code{\link[shiny:tabPanel]{tabPanel}}). \cr
 #'         \code{select} \tab If \code{\link[base:logical]{TRUE}} \code{tab} gets
-#'         selected upon being inserted.
+#'         selected upon being inserted. \cr
 #'         \code{closeable} \tab If \code{\link[base:logical]{TRUE}}, tabPanel is
 #'         closeable via an button with cross icon next to the tabPanel's title.
 #'       }
@@ -73,6 +73,13 @@
 #'   }
 #'   \item{\code{hide_content_element_by_id(content_element_id)}}{Hide the content
 #'   element with \code{id == content_element_id}.
+#'   }
+#'   \item{\code{remove_tab(content_element_id, target)}}{Dynamically remove a
+#'     \code{\link[shiny]{tabPanel}} from an existing content element.
+#'    \tabular{ll}{
+#'      \code{content_element_id} \tab Id of content element. \cr
+#'      \code{target} \tab The \code{value} of the \code{tabPanel} to be removed.
+#'    }
 #'   }
 #'   \item{\code{update_tab(content_element_id, selected)}}{Update the selected
 #'   tab of the content element with \code{id == content_element_id}}.

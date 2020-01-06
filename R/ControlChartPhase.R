@@ -63,7 +63,7 @@ ControlChartPhase <- R6::R6Class(
 
       private$name <- shiny::reactiveVal(name)
       private$preliminary <- shiny::reactiveVal(preliminary)
-      private$sample_storage <- shinyExplorer::ObjectStorage$new(
+      private$sample_storage <- ObjectStorage$new(
         allowed_classes = c("ControlChartSample", "ControlChartSampleList")
       )
     },

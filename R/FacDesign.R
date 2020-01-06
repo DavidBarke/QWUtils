@@ -94,7 +94,6 @@
 #'   }
 #' }
 #'
-#' @importFrom shinyExplorer ObjectStorage
 #'
 #' @name FacDesign
 NULL
