@@ -37,15 +37,18 @@ observed_vector_input <- function(
 
   output$wrong_char <- shiny::renderUI({
     if (wrong_char()) {
-      ui <- tagList(
-        QWUtils::label_lang(
-          de = paste0(
-            "Erlaubte Zeichen sind Ziffern, ',', '.' und ' '. Das letzte",
-            "Zeichen muss eine Ziffer sein."
-          ),
-          en = paste0(
-            "Allowed signs are digits, ',', '.', and ' '. The last sign has to",
-            "be a digit."
+      ui <- htmltools::tagList(
+        htmltools::span(
+          class = "error-msg",
+          QWUtils::label_lang(
+            de = paste0(
+              "Erlaubte Zeichen sind Ziffern, ',', '.' und ' '. Das letzte",
+              "Zeichen muss eine Ziffer sein."
+            ),
+            en = paste0(
+              "Allowed signs are digits, ',', '.', and ' '. The last sign has to",
+              "be a digit."
+            )
           )
         )
       )

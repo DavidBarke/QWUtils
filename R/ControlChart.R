@@ -174,9 +174,12 @@ ControlChart <- R6::R6Class(
     get_control_line_values = function() {
       purrr::map_dbl(
         self$get_control_line_ids(),
-        function(control_line_id) {
-          private$control_line_storage$get_object(control_line_id)$get_value(
-            params = self$get_params(),
+        function(id) {
+          control_line = private$control_line_storage$get_object(id)
+
+          control_line_value(
+            data = self$get_table(),
+            quantile = control_line$get_quantile(),
             type = private$type()
           )
         }
@@ -189,50 +192,6 @@ ControlChart <- R6::R6Class(
 
     get_name = function() {
       private$name()
-    },
-
-    get_params = function() {
-      preliminary_table <- self$get_table(preliminary = TRUE)
-      params <- list(
-        n = nrow(preliminary_table)
-      )
-
-      R <- function(x) diff(range(x))
-
-      switch(
-        self$get_type(),
-        "xbar_s" = {
-          summarised_table <- group_by(preliminary_table, sample) %>%
-            summarise(x_bar = mean(value), s = sd(value)) %>%
-            summarise(x_bar_bar = mean(x_bar), s_bar = mean(s))
-          params$x_bar_bar <- summarised_table$x_bar_bar
-          params$s_bar <- summarised_table$s_bar
-        },
-        "s" = {
-          summarised_table <- group_by(preliminary_table, sample) %>%
-            summarise(s = sd(value)) %>%
-            summarise(s_bar = mean(s))
-          params$s_bar <- summarised_table$s_bar
-        },
-        "p" = {
-          params$p_bar <- mean(preliminary_table$value)
-        },
-        "xbar_R" = {
-          summarised_table <- group_by(preliminary_table, sample) %>%
-            summarise(x_bar = mean(value), R = R(value)) %>%
-            summarise(x_bar_bar = mean(x_bar), R_bar = mean(R))
-          params$x_bar_bar <- summarised_table$x_bar_bar
-          params$R_bar <- summarised_table$R_bar
-        },
-        "R" = {
-          summarised_table <- group_by(preliminary_table, sample) %>%
-            summarise(R = R(value)) %>%
-            summarise(R_bar = mean(R))
-          params$R_bar <- summarised_table$R_bar
-        }
-      )
-
-      params
     },
 
     get_phase = function(id) {
