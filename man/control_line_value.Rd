@@ -14,7 +14,8 @@ determined by calculating the mean sample size.}
 
 \item{quantile}{A numeric vector representing the quantiles for which the
 control line values are calculated. If \code{type \%in\% c("xbar_R", "R")}
-quantiles must be in \code{c(-3, 0, 3)}.}
+quantiles must be in \code{c(-3, 0, 3)}. If \code{type == "R"}, length of
+quantile must be 1.}
 
 \item{type}{Control chart's type.}
 }

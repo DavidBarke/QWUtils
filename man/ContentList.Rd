@@ -35,28 +35,14 @@ in order for the content list to work properly.
       \code{session} \tab A shiny \code{\link[shiny:session]{session}} object.
     }
   }
-  \item{\code{add_element(content_element)}}{Add a content element to the
-  content list. If this particular element has already been added and it is
-  currently hidden, it gets shown.
-    \tabular{ll}{
-      \code{content_element} \tab A content element object.
-    }
-  }
-  \item{\code{add_element_actionButton(content_element, actionButton_id,
-  actionButton_session)}}{Add a content element to the content list, that gets
-  displayed after an \code{\link[shiny:actionButton]{actionButton}} has been
-  clicked.
+  \item{\code{add_content_element(content_element, hidden = TRUE)}}{Add a
+  content element to the content list.
     \tabular{ll}{
       \code{content_element} \tab A content element object. \cr
-      \code{actionButton_id} \tab The inputId associated with the
-      \code{\link[shiny:actionButton]{actionButton}}. \cr
-      \code{actionButton_session} \tab The shiny \code{\link[shiny:session]{session}}
-      object that the \code{\link[shiny:actionButton]{actionButton}} belongs
-      to.
+      \code{hidden} \tab If \code{\link[base:logical]{TRUE}}, this content
+        element starts in a hidden state. Use \code{this$show_content_element()}
+        to show it.
     }
-  }
-  \item{\code{add_element_by_id(content_element_id)}}{Show the content element
-  with \code{id == content_element_id}.
   }
   \item{\code{append_tab(content_element_id, tab, select = FALSE,
     closeable = FALSE)}}{Append a tab to the content element with
@@ -72,13 +58,13 @@ in order for the content list to work properly.
         closeable via an button with cross icon next to the tabPanel's title.
       }
   }
-  \item{\code{get_content_element_by_id(content_element_id)}}{Get the content
+  \item{\code{get_content_element(content_element_id)}}{Get the content
   element with \code{id == content_element_id}.
   }
   \item{\code{get_content_element_ids()}}{Get the ids of the content elements
   as a \code{\link[base:character]{character}} vector.
   }
-  \item{\code{hide_content_element_by_id(content_element_id)}}{Hide the content
+  \item{\code{hide_content_element(content_element_id)}}{Hide the content
   element with \code{id == content_element_id}.
   }
   \item{\code{remove_tab(content_element_id, target)}}{Dynamically remove a
@@ -87,6 +73,9 @@ in order for the content list to work properly.
      \code{content_element_id} \tab Id of content element. \cr
      \code{target} \tab The \code{value} of the \code{tabPanel} to be removed.
    }
+  }
+  \item{\code{show_content_element(content_element_id)}}{Show the content element
+  with \code{id == content_element_id}.
   }
   \item{\code{update_tab(content_element_id, selected)}}{Update the selected
   tab of the content element with \code{id == content_element_id}}.
